@@ -11,6 +11,7 @@
 1. [Getting Started](#getting-started)
 2. [Architecture](#architecture)
 3. [Modules](#modules)
+4. [Testing](#testing)
 
 ## Getting Started
 
@@ -26,14 +27,26 @@ This project does not use any third party dependency.
 
 ## Architecture
 
-The workspace contains different projects:
+Across this app, we will use:
 
-- [BitsoShell](./BitsoShell) is the main app shell.
-- [BitsoUI](./BitsoUI) provides UI components to keep a consistent style.
-- [BitsoKit](./BitsoKit) provides the tools to build the domain layer.
-- [Features](./Features) contains the feature modules.
+- **MVVM** architectural pattern
+- **Dependency Injection** through initializer
+- **Async/Await** patterns to perform background tasks
 
 ## Modules
+
+The workspace contains different modules:
+
+- [BitsoShell](./BitsoShell): is the main app shell.
+- [BitsoUI](./BitsoUI): provides UI components to keep a consistent style.
+- [BitsoKit](./BitsoKit): provides the tools to build the domain layer.
+- [Features](./Features): contains the feature modules.
+
+Each of these modules are Local Swift Packages.
+
+## Testing
+
+TBD
 
 <!-- Badge Links -->
 
