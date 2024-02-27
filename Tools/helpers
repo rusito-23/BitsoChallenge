@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# Script Helpers
+
+# --------------------
+# Colors
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+CLEAR='\033[0m'
+
+log_info() { echo "\n ℹ️  ${CLEAR}$@${CLEAR}\n"; }
+
+log_error() { echo "\n ❌  ${RED}$@${CLEAR}\n"; }
+
+log_success() { echo "\n ✅  ${GREEN}$@${CLEAR}\n"; }
+
+log_warning() { echo "\n ⚠️  ${YELLOW}$@${CLEAR}\n"; }
+
+# --------------------
+# Paths
+
+SWIFTLINT='mint run swiftlint lint --strict --quiet'
+
+SPELLCHECK='mint run spellcheck --yml .spellcheck.yaml --'

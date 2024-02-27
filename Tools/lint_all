@@ -1,0 +1,10 @@
+#!/bin/sh
+# Lint All Project Files
+
+# Check `pwd` and use helpers
+[ -d Tools ] || (echo "ERROR: Please run script from top folder" && exit 1)
+source Tools/helpers
+
+# Run SwiftLint
+log_info "Running SwiftLint"
+$SWIFTLINT

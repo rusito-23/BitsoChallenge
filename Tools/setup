@@ -1,0 +1,21 @@
+#!/bin/sh
+# Set up Tools
+
+# Check `pwd` and use helpers
+[ -d Tools ] || (echo "ERROR: Please run script from top folder" && exit 1)
+source Tools/helpers
+
+# Install mint if needed
+log_info "Installing mint if needed..."
+brew list mint &> /dev/null \
+    || brew install mint \
+    || (log_error "Failed to install Mint" && exit 1)
+
+# Bootstrap mint packages
+log_info "Bootstrap mint packages"
+mint bootstrap
+
+# Setup git hooks
+log_info "Setup git hooks"
+cp Tools/pre-commit .git/hooks/pre-commit
+git config --local core.hooksPath $(pwd)/.git/hooks
