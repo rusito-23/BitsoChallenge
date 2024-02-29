@@ -3,7 +3,7 @@ opt_in_rules:
 - empty_string
 
 disabled_rules:
-- todo
+- leading_whitespace
 
 excluded:
 - Carthage
@@ -56,5 +56,8 @@ nesting:
 
 unused_optional_binding:
     ignore_optional_try: true
+
+todo:
+  severity: warning
 
 reporter: "xcode"

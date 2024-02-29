@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		781EC2142B8E37ED004A0757 /* BitsoShellApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781EC2132B8E37ED004A0757 /* BitsoShellApp.swift */; };
 		781EC2162B8E37ED004A0757 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781EC2152B8E37ED004A0757 /* ContentView.swift */; };
+		78C1379B2B8EB36D0013719A /* BitsoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 78C1379A2B8EB36D0013719A /* BitsoKit */; };
+		78C1379D2B8EB36D0013719A /* BitsoUI in Frameworks */ = {isa = PBXBuildFile; productRef = 78C1379C2B8EB36D0013719A /* BitsoUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78C1379D2B8EB36D0013719A /* BitsoUI in Frameworks */,
+				78C1379B2B8EB36D0013719A /* BitsoKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -33,6 +37,7 @@
 			children = (
 				781EC2122B8E37ED004A0757 /* BitsoShell */,
 				781EC2112B8E37ED004A0757 /* Products */,
+				78C137992B8EB36D0013719A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -53,6 +58,13 @@
 			path = BitsoShell;
 			sourceTree = "<group>";
 		};
+		78C137992B8EB36D0013719A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -69,6 +81,10 @@
 			dependencies = (
 			);
 			name = BitsoShell;
+			packageProductDependencies = (
+				78C1379A2B8EB36D0013719A /* BitsoKit */,
+				78C1379C2B8EB36D0013719A /* BitsoUI */,
+			);
 			productName = BitsoShell;
 			productReference = 781EC2102B8E37ED004A0757 /* BitsoShell.app */;
 			productType = "com.apple.product-type.application";
@@ -323,6 +339,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		78C1379A2B8EB36D0013719A /* BitsoKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BitsoKit;
+		};
+		78C1379C2B8EB36D0013719A /* BitsoUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BitsoUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 781EC2082B8E37ED004A0757 /* Project object */;
 }

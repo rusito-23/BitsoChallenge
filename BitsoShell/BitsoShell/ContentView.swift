@@ -5,11 +5,12 @@
 //  Created by Igor on 27/02/2024.
 //
 
+import BitsoUI
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
+        VStack(spacing: Spacing.small.rawValue) {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
