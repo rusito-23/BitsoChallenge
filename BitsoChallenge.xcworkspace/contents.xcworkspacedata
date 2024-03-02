@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:BitsoTestKit">
+   </FileRef>
+   <FileRef
+      location = "group:BitsoNav">
+   </FileRef>
+   <FileRef
       location = "group:BitsoKit">
    </FileRef>
    <FileRef

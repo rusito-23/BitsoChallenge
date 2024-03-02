@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  BitsoShell
+
+  Created by Igor on 02/03/2024.
+  
+*/
+
+// MARK: - Root View
+
+"WELCOME_TITLE" = "Welcome!";
+"BOOKS_BUTTON_TITLE" = "Go to books";
