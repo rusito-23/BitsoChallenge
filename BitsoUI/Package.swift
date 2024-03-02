@@ -19,7 +19,9 @@ let package = Package(
             path: "Sources"),
         .testTarget(
             name: "BitsoUITests",
-            dependencies: ["BitsoUI"],
+            dependencies: [
+                "BitsoUI",
+            ],
             path: "Tests"),
     ]
 )

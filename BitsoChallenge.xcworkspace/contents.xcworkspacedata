@@ -2,16 +2,19 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:BitsoTestKit">
-   </FileRef>
-   <FileRef
-      location = "group:BitsoNav">
+      location = "group:BitsoBooks">
    </FileRef>
    <FileRef
       location = "group:BitsoKit">
    </FileRef>
    <FileRef
+      location = "group:BitsoNav">
+   </FileRef>
+   <FileRef
       location = "group:BitsoNet">
+   </FileRef>
+   <FileRef
+      location = "group:BitsoTestKit">
    </FileRef>
    <FileRef
       location = "group:BitsoUI">

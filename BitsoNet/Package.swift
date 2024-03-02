@@ -24,7 +24,9 @@ let package = Package(
             path: "Sources"),
         .testTarget(
             name: "BitsoNetTests",
-            dependencies: ["BitsoNet"],
+            dependencies: [
+                "BitsoNet",
+            ],
             path: "Tests"),
     ]
 )
