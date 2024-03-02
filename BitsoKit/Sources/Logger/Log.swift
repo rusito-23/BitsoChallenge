@@ -1,6 +1,9 @@
 import os
 import Foundation
 
+/// A  public global property to access the logger.
+public let log = Log()
+
 /// A general purpose logger that wraps around the `os.Logger` to:
 /// - prefix all log messages with general purpose information: date, file, line, column, level.
 /// - add specific use-case logs (network).
@@ -77,30 +80,6 @@ public struct Log {
         log(
             .error,
             object,
-            file: file,
-            line: line,
-            function: function
-        )
-    }
-
-    public func network(
-        _ request: URLRequest,
-        _ response: HTTPURLResponse,
-        file: String = #file,
-        line: Int = #line,
-        function: String = #function
-    ) {
-        log(
-            .debug,
-            """
-
-            Request \(request.httpMethod ?? "NONE") \(request.url?.absoluteString ?? "NONE"):
-                Body Bytes: \(request.httpBody?.count ?? 0)
-                Headers: \(request.allHTTPHeaderFields ?? [:])
-            Response:
-                Status Code: \(response.statusCode)
-                Headers: \(response.allHeaderFields)
-            """,
             file: file,
             line: line,
             function: function

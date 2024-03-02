@@ -1,3 +1,4 @@
+import BitsoKit
 import Foundation
 
 // TBD:
@@ -42,6 +43,7 @@ extension LiveNetworkClient: NetworkClient {
 
         // Build the request for the service call.
         guard let request = makeRequest(from: endpoint) else {
+            log.error("Request creation for \(endpoint.method) \(endpoint.path) failed.")
             return .failure(.invalidRequest)
         }
 
@@ -50,6 +52,7 @@ extension LiveNetworkClient: NetworkClient {
             let (data, response) = try? await urlSession.data(for: request),
             let response = response as? HTTPURLResponse
         else {
+            log.error("REQ: \(request) failed with unknown URLSession error.")
             return .failure(.unknown)
         }
 
@@ -61,22 +64,27 @@ extension LiveNetworkClient: NetworkClient {
 
         // Service determined that the request is invalid.
         case (.client, _):
+            log.error("Request: \(request) failed with error: .invalidRequest")
             return .failure(.invalidRequest)
 
         // If the call is successful but we're missing the expected payload.
         case (.success, nil):
+            log.error("Request: \(request) failed with error: .invalidResponse")
             return .failure(.invalidResponse)
 
         // There has been a server error.
         case (.server, _):
+            log.error("Request: \(request) failed with error: .serviceError")
             return .failure(.serviceError(code: response.statusCode))
 
         // These status won't be handled at the moment.
         case (.info, _), (.redirect, _), (.unknown, _):
+            log.error("Request: \(request) failed for status: \(status)")
             return .failure(.unknown)
 
         // If the call is successful and we get the expected payload.
         case let (.success, .some(responsePayload)):
+            log.info("Request: \(request) succeeded.")
             return .success(responsePayload)
         }
     }

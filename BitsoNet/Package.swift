@@ -12,10 +12,15 @@ let package = Package(
             name: "BitsoNet",
             targets: ["BitsoNet"]),
     ],
+    dependencies: [
+        .package(path: "../BitsoKit"),
+    ],
     targets: [
         .target(
             name: "BitsoNet",
-            dependencies: [],
+            dependencies: [
+                "BitsoKit",
+            ],
             path: "Sources"),
         .testTarget(
             name: "BitsoNetTests",
