@@ -6,12 +6,12 @@ import Foundation
 /// - allow injection without having to use a stub URL session.
 /// - allows handling codable payloads to prevent managing data.
 /// - improve the interface by providing an easy-to-use `Result`.
-protocol NetworkClient {
+public protocol NetworkClient {
 
     /// Performs a network call using the given API details.
     /// - Parameter endpoint: The ``Endpoint`` for the service call.
     /// - Returns result: A result that indicates whether the call was successful and provides the retrieved payload or error.
     func perform<ResponsePayload: Decodable>(
-        _ endpoint: EndpointProvider
+        _ endpoint: Endpoint
     ) async -> Result<ResponsePayload, ServiceError>
 }

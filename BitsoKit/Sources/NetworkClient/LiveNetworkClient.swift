@@ -1,33 +1,34 @@
 import Foundation
 
+// TBD:
+// - add retry system
+// - move BaseURL to a separate protocol/component
+// - add logger
+
 /// The live RESTful implementation of the network client protocol.
 ///
 /// - Note: All payloads used in this client will be coded into/from JSON.
-struct LiveNetworkClient {
+public final class LiveNetworkClient {
 
     // MARK: Private Properties
 
-    private let baseURL: URL = URL(string: "https://sandbox.bitso.com/api/v3")! // FIXME: Inject!
     private let urlSession: URLSession
     private let encoder: JSONEncoder
     private let decoder: JSONDecoder
-    private let defaultHeaders: [Header]
+    private let defaultHeaders: [Header] = [HTTP.Headers.ContentType.json]
 
     // MARK: Initializer
 
     /// Create a live RESTful network client.
     /// - Parameter urlSession: The URL session that will be used to perform the requests. Defaults to the shared instance.
-    /// - Parameter defaultHeaders: The collection of default headers to be used in all requests.
     /// - Parameter encoder: The JSON encoder that will be used to encode the request payloads.
     /// - Parameter decoder: The JSON decoder that will be used to decode the response payloads.
-    init(
+    public init(
         urlSession: URLSession = .shared,
-        defaultHeaders: [Header] = [HTTP.Headers.ContentType.json],
         encoder: JSONEncoder = JSONEncoder(),
         decoder: JSONDecoder = JSONDecoder()
     ) {
         self.urlSession = urlSession
-        self.defaultHeaders = defaultHeaders
         self.encoder = encoder
         self.decoder = decoder
     }
@@ -36,8 +37,8 @@ struct LiveNetworkClient {
 // MARK: - Network Service Conformance
 
 extension LiveNetworkClient: NetworkClient {
-    func perform<ResponsePayload: Decodable>(
-        _ endpoint: EndpointProvider
+    public func perform<ResponsePayload: Decodable>(
+        _ endpoint: Endpoint
     ) async -> Result<ResponsePayload, ServiceError> {
 
         // Build the request for the service call.
@@ -86,15 +87,17 @@ extension LiveNetworkClient: NetworkClient {
 
 private extension LiveNetworkClient {
     /// Create the URL including the base URL, the path and the query parameters.
-    func makeURL(from endpoint: EndpointProvider) -> URL? {
-        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)
-        urlComponents?.path = endpoint.path
-        urlComponents?.queryItems = endpoint.parameters
-        return urlComponents?.url
+    func makeURL(from endpoint: Endpoint) -> URL? {
+        var urlComponents = URLComponents()
+        urlComponents.scheme = endpoint.domain.scheme
+        urlComponents.host = endpoint.domain.host
+        urlComponents.path = endpoint.domain.path ?? ""
+        urlComponents.queryItems = endpoint.parameters
+        return urlComponents.url?.appendingPathExtension(endpoint.path)
     }
 
     /// Create the request based on the network call details.
-    func makeRequest(from endpoint: EndpointProvider) -> URLRequest? {
+    func makeRequest(from endpoint: Endpoint) -> URLRequest? {
         // Build the request URL.
         guard let url = makeURL(from: endpoint) else {
             return nil
@@ -105,8 +108,8 @@ private extension LiveNetworkClient {
         request.httpMethod = endpoint.method.rawValue
 
         // Include request headers, prioritizing additional over default headers.
-        let headers = [defaultHeaders, endpoint.additionalHeaders].compactMap { $0 }.joined()
-        let rawHeaders = Dictionary(uniqueKeysWithValues: headers.map { ($0.key, $0.value) })
+        let headers = [defaultHeaders, endpoint.additionalHeaders].joined().map(\.asTuple)
+        let rawHeaders = Dictionary(headers, uniquingKeysWith: { _, last in last })
         request.allHTTPHeaderFields = rawHeaders
 
         // Include the payload in the request if supported and needed.

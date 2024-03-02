@@ -1,7 +1,10 @@
 import Foundation
 
 /// Describes the required data to make a request to an endpoint.
-public protocol EndpointProvider {
+public protocol Endpoint {
+    /// The domain targeted by the endpoint.
+    var domain: Domain { get }
+
     /// The ``HTTPMethod`` for the service call.
     var method: HTTP.Method { get }
 
@@ -12,7 +15,7 @@ public protocol EndpointProvider {
     var parameters: [URLQueryItem] { get }
 
     /// The optional request additional headers.
-    var additionalHeaders: [Header]? { get }
+    var additionalHeaders: [Header] { get }
 
     /// The request body payload.
     var requestPayload: Encodable? { get }

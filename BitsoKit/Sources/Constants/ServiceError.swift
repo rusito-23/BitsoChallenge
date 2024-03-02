@@ -14,3 +14,7 @@ public enum ServiceError: Error {
     /// When the root cause of the failure can't be determined.
     case unknown
 }
+
+// MARK: - Equatable Conformance
+
+extension ServiceError: Equatable {}
