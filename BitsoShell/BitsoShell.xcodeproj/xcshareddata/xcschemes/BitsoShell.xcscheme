@@ -49,6 +49,16 @@
                ReferencedContainer = "container:../BitsoNet">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "BitsoKitTests"
+               BuildableName = "BitsoKitTests"
+               BlueprintName = "BitsoKitTests"
+               ReferencedContainer = "container:../BitsoKit">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

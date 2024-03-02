@@ -4,6 +4,9 @@ import PackageDescription
 
 let package = Package(
     name: "BitsoUI",
+    platforms: [
+        .iOS(.v16),
+    ],
     products: [
         .library(
             name: "BitsoUI",

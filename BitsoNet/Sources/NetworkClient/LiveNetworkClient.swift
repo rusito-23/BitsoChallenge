@@ -2,7 +2,6 @@ import Foundation
 
 // TBD:
 // - add retry system
-// - move BaseURL to a separate protocol/component
 // - add logger
 
 /// The live RESTful implementation of the network client protocol.
