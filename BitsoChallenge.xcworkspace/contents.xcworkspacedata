@@ -8,9 +8,6 @@
       location = "group:BitsoKit">
    </FileRef>
    <FileRef
-      location = "group:BitsoNav">
-   </FileRef>
-   <FileRef
       location = "group:BitsoNet">
    </FileRef>
    <FileRef

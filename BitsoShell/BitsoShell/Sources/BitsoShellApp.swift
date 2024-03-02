@@ -1,10 +1,3 @@
-//
-//  BitsoShellApp.swift
-//  BitsoShell
-//
-//  Created by Igor on 27/02/2024.
-//
-
 import SwiftUI
 
 @main

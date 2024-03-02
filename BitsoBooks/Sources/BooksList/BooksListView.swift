@@ -1,8 +1,14 @@
-//
-//  File.swift
-//  
-//
-//  Created by Igor on 02/03/2024.
-//
+import SwiftUI
 
-import Foundation
+public struct BooksListView: View {
+
+    public init() {}
+
+    public var body: some View {
+        VStack {
+            Spacer()
+            Text("Hello World!")
+            Spacer()
+        }
+    }
+}

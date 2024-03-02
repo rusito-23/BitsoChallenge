@@ -1,4 +1,4 @@
-import BitsoNav
+import BitsoBooks
 import BitsoKit
 import BitsoUI
 import SwiftUI
@@ -24,7 +24,7 @@ struct RootView: View {
 
     private var button: some View {
         Button {
-            // router.navigate(to: Text())
+            router.navigate(to: BooksDestinations.booksList)
         } label: {
             Text(viewModel.booksButtonTitle)
                 .font(.body)

@@ -1,26 +1,24 @@
-//
-//  ContentView.swift
-//  BitsoShell
-//
-//  Created by Igor on 27/02/2024.
-//
-
-import BitsoNav
+import BitsoBooks
+import BitsoKit
 import BitsoUI
 import SwiftUI
 
 struct AppCoordinator: View {
-
-    // MARK: Properties
-
+    let id = UUID()
     @ObservedObject var router = Router()
-
-    // MARK: Body
 
     var body: some View {
         NavigationStack(path: $router.path) {
             RootView()
+                .navigationDestination(for: BooksDestinations.self, destination: navigate)
         }
         .environmentObject(router)
+    }
+
+    @ViewBuilder
+    func navigate(to destination: BooksDestinations) -> some View {
+        switch destination {
+        case .booksList: BooksListView()
+        }
     }
 }
