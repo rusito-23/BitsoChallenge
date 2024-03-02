@@ -1,4 +1,4 @@
-import BitsoKit
+import BitsoNet
 import Foundation
 
 /// A mock header that can take any values.

@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		781EC2142B8E37ED004A0757 /* BitsoShellApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781EC2132B8E37ED004A0757 /* BitsoShellApp.swift */; };
 		781EC2162B8E37ED004A0757 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781EC2152B8E37ED004A0757 /* ContentView.swift */; };
-		78C1379B2B8EB36D0013719A /* BitsoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 78C1379A2B8EB36D0013719A /* BitsoKit */; };
 		78C1379D2B8EB36D0013719A /* BitsoUI in Frameworks */ = {isa = PBXBuildFile; productRef = 78C1379C2B8EB36D0013719A /* BitsoUI */; };
+		78F2C4C92B9370F100C16672 /* BitsoNet in Frameworks */ = {isa = PBXBuildFile; productRef = 78F2C4C82B9370F100C16672 /* BitsoNet */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,8 +24,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78F2C4C92B9370F100C16672 /* BitsoNet in Frameworks */,
 				78C1379D2B8EB36D0013719A /* BitsoUI in Frameworks */,
-				78C1379B2B8EB36D0013719A /* BitsoKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,8 +82,8 @@
 			);
 			name = BitsoShell;
 			packageProductDependencies = (
-				78C1379A2B8EB36D0013719A /* BitsoKit */,
 				78C1379C2B8EB36D0013719A /* BitsoUI */,
+				78F2C4C82B9370F100C16672 /* BitsoNet */,
 			);
 			productName = BitsoShell;
 			productReference = 781EC2102B8E37ED004A0757 /* BitsoShell.app */;
@@ -341,13 +341,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		78C1379A2B8EB36D0013719A /* BitsoKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = BitsoKit;
-		};
 		78C1379C2B8EB36D0013719A /* BitsoUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BitsoUI;
+		};
+		78F2C4C82B9370F100C16672 /* BitsoNet */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BitsoNet;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

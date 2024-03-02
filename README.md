@@ -39,7 +39,7 @@ The workspace contains different modules:
 
 - [BitsoShell](./BitsoShell): is the main app shell.
 - [BitsoUI](./BitsoUI): provides UI components to keep a consistent style.
-- [BitsoKit](./BitsoKit): provides the tools to build the domain layer.
+- [BitsoNet](./BitsoNet): provides a generic network layer.
 - [Features](./Features): contains the feature modules.
 
 Each of these modules are Local Swift Packages.

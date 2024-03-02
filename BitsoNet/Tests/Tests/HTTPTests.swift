@@ -1,5 +1,5 @@
 import XCTest
-@testable import BitsoKit
+@testable import BitsoNet
 
 final class HTTPTests: XCTestCase {
     func testContentTypeHeaders() {

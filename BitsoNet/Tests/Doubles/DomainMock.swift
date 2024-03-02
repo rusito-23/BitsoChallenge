@@ -1,4 +1,4 @@
-import BitsoKit
+import BitsoNet
 import Foundation
 
 /// A mock domain that can take any values.

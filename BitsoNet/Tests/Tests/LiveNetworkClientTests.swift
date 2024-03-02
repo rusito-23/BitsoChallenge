@@ -1,4 +1,4 @@
-import BitsoKit
+import BitsoNet
 import XCTest
 
 final class LiveNetworkClientTests: XCTestCase {

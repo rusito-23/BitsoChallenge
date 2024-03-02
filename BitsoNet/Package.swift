@@ -3,23 +3,23 @@
 import PackageDescription
 
 let package = Package(
-    name: "BitsoKit",
+    name: "BitsoNet",
     platforms: [
-        .iOS(.v13)
+        .iOS(.v13),
     ],
     products: [
         .library(
-            name: "BitsoKit",
-            targets: ["BitsoKit"]),
+            name: "BitsoNet",
+            targets: ["BitsoNet"]),
     ],
     targets: [
         .target(
-            name: "BitsoKit",
+            name: "BitsoNet",
             dependencies: [],
             path: "Sources"),
         .testTarget(
-            name: "BitsoKitTests",
-            dependencies: ["BitsoKit"],
+            name: "BitsoNetTests",
+            dependencies: ["BitsoNet"],
             path: "Tests"),
     ]
 )

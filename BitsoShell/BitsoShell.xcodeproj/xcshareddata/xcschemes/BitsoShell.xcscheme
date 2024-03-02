@@ -33,20 +33,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BitsoKitTests"
-               BuildableName = "BitsoKitTests"
-               BlueprintName = "BitsoKitTests"
-               ReferencedContainer = "container:../BitsoKit">
+               BlueprintIdentifier = "BitsoUITests"
+               BuildableName = "BitsoUITests"
+               BlueprintName = "BitsoUITests"
+               ReferencedContainer = "container:../BitsoUI">
             </BuildableReference>
          </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BitsoUITests"
-               BuildableName = "BitsoUITests"
-               BlueprintName = "BitsoUITests"
-               ReferencedContainer = "container:../BitsoUI">
+               BlueprintIdentifier = "BitsoNetTests"
+               BuildableName = "BitsoNetTests"
+               BlueprintName = "BitsoNetTests"
+               ReferencedContainer = "container:../BitsoNet">
             </BuildableReference>
          </TestableReference>
       </Testables>
