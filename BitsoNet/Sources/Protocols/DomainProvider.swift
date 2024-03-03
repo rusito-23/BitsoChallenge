@@ -1,7 +1,7 @@
 import Foundation
 
-/// Describes the components that conform a domain, meant to be used to construct base URLs.
-public protocol Domain {
+/// Describes the components required to conform a domain, meant to be used to construct base URLs.
+public protocol DomainProvider {
     /// The schema used by the domain.
     /// Examples: _https_, _http_
     var scheme: String { get }
@@ -16,6 +16,6 @@ public protocol Domain {
 
 // MARK: - Defaults
 
-extension Domain {
+extension DomainProvider {
     var path: String? { nil }
 }

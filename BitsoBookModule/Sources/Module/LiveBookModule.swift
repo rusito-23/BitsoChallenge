@@ -8,13 +8,14 @@ public struct LiveBookModule: BookModule {
 
     // MARK: Properties
 
-    private let domain: Domain
+    private let dependencies: Dependencies
 
     // MARK: Public Initializer
 
     /// Create a books module.
-    public init(domain: any Domain) {
-        self.domain = domain
+    /// - Parameter dependencies: The dependencies needed to create a ``LiveBookModule``.
+    public init(dependencies: Dependencies) {
+        self.dependencies = dependencies
     }
 
     // MARK: Navigation
@@ -34,6 +35,19 @@ public struct LiveBookModule: BookModule {
     @ViewBuilder private func view(for destination: BookDestination) -> some View {
         switch destination {
         case .bookList: BookListView()
+        }
+    }
+}
+
+// MARK: - Dependencies
+
+public extension LiveBookModule {
+    /// Describes the dependencies needed to create a ``LiveBookModule``.
+    struct Dependencies {
+        private let domain: DomainProvider
+
+        public init(domain: DomainProvider) {
+            self.domain = domain
         }
     }
 }

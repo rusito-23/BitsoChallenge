@@ -11,7 +11,7 @@ public final class LiveNetworkClient {
 
     // MARK: Private Properties
 
-    private let domain: Domain
+    private let domain: DomainProvider
     private let urlSession: URLSession
     private let encoder: JSONEncoder
     private let decoder: JSONDecoder
@@ -25,7 +25,7 @@ public final class LiveNetworkClient {
     /// - Parameter encoder: The JSON encoder that will be used to encode the request payloads.
     /// - Parameter decoder: The JSON decoder that will be used to decode the response payloads.
     public init(
-        domain: Domain,
+        domain: DomainProvider,
         urlSession: URLSession = .shared,
         encoder: JSONEncoder = JSONEncoder(),
         decoder: JSONDecoder = JSONDecoder()

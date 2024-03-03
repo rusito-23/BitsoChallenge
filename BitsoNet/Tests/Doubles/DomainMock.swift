@@ -2,7 +2,7 @@ import BitsoNet
 import Foundation
 
 /// A mock domain that can take any values.
-struct DomainMock: Domain {
+struct DomainMock: DomainProvider {
     let scheme: String
     let host: String
     let path: String?

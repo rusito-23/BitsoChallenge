@@ -12,12 +12,16 @@ struct AppCoordinator: View {
 
     // MARK: Modules
 
-    private let booksModule: any BookModule
+    private let bookModule: any BookModule
 
-    // MARK: Initializer
+    // MARK: Initializers
 
-    init(booksModule: any BookModule = LiveBookModule(domain: Environment.sandbox)) {
-        self.booksModule = booksModule
+    init(bookModule: any BookModule) {
+        self.bookModule = bookModule
+    }
+
+    init(configuration: Configuration) {
+        self.bookModule = LiveBookModule(dependencies: .init(domain: configuration.environment))
     }
 
     // MARK: Body
@@ -25,7 +29,7 @@ struct AppCoordinator: View {
     var body: some View {
         NavigationStack(path: $router.path) {
             RootView()
-                .navigation(module: booksModule)
+                .navigation(module: bookModule)
         }
         .environmentObject(router)
     }

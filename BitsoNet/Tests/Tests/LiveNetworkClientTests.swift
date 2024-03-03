@@ -255,7 +255,7 @@ private extension LiveNetworkClientTests {
     }
 
     /// A util to create the URL from the combination of domain and endpoint.
-    func url(from domain: Domain, _ endpoint: Endpoint) -> URL? {
+    func url(from domain: DomainProvider, _ endpoint: Endpoint) -> URL? {
         var components = URLComponents()
         components.scheme = domain.scheme
         components.host = domain.host

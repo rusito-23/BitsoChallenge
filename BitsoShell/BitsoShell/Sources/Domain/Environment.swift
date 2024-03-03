@@ -7,7 +7,7 @@ enum Environment {
 
 // MARK: - Domain Provider Conformance
 
-extension Environment: Domain {
+extension Environment: DomainProvider {
     /// All environments should use HTTPS.
     var scheme: String {
         "https"

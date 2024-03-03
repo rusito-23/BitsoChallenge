@@ -14,7 +14,7 @@ final class LiveBookService: BookService {
     /// Create a new live book service.
     /// - Parameter client: The network client to fetch book data. Defaults to a new `LiveNetworkClient`.
     init(
-        domain: Domain = BookDomain(),
+        domain: DomainProvider = BookDomain(),
         client: NetworkClient?  = nil
     ) {
         self.client = client ?? LiveNetworkClient(domain: domain)
@@ -34,7 +34,7 @@ final class LiveBookService: BookService {
 // MARK: - Endpoint
 
 private extension LiveBookService {
-    struct BookDomain: Domain {
+    struct BookDomain: DomainProvider {
         let scheme: String = "https"
         let host: String = "sandbox.bitso.com"
         let path: String? = "api/v3"
@@ -44,7 +44,7 @@ private extension LiveBookService {
         case booksList
         case bookDetails(id: String)
 
-        var domain: Domain {
+        var domain: DomainProvider {
             BookDomain()
         }
 
