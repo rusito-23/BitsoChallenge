@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct BooksListView: View {
+struct BookListView: View {
     var body: some View {
         VStack {
             Spacer()

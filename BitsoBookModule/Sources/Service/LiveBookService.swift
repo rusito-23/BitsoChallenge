@@ -1,8 +1,8 @@
 import BitsoNet
 import Foundation
 
-/// The live implementation of the books service.
-final class LiveBooksService: BooksService {
+/// The live implementation of ``BookService``.
+final class LiveBookService: BookService {
 
     // MARK: Private Properties
 
@@ -19,18 +19,18 @@ final class LiveBooksService: BooksService {
 
     // MARK: Service Conformance
 
-    func fetchAll() async -> Result<[Book], BooksServiceError> {
+    func fetchAll() async -> Result<[Book], BookServiceError> {
         .failure(.generic)
     }
 
-    func fetchDetails(with bookID: String) -> Result<Book, BooksServiceError> {
+    func fetchDetails(with bookID: String) -> Result<Book, BookServiceError> {
         .failure(.generic)
     }
 }
 
 // MARK: - Endpoint
 
-private extension LiveBooksService {
+private extension LiveBookService {
     struct BookDomain: Domain {
         let scheme: String = "https"
         let host: String = "sandbox.bitso.com"

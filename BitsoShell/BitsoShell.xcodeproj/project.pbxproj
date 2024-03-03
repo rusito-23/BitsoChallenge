@@ -10,7 +10,7 @@
 		78074A2D2B939C29002E29AC /* BitsoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 78074A2C2B939C29002E29AC /* BitsoKit */; };
 		781EC2142B8E37ED004A0757 /* BitsoShellApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781EC2132B8E37ED004A0757 /* BitsoShellApp.swift */; };
 		781EC2162B8E37ED004A0757 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781EC2152B8E37ED004A0757 /* AppCoordinator.swift */; };
-		7838B5282B93E4D100B1AB36 /* BitsoBooks in Frameworks */ = {isa = PBXBuildFile; productRef = 7838B5272B93E4D100B1AB36 /* BitsoBooks */; };
+		7838B5282B93E4D100B1AB36 /* BitsoBookModule in Frameworks */ = {isa = PBXBuildFile; productRef = 7838B5272B93E4D100B1AB36 /* BitsoBookModule */; };
 		784B6A672B93C1D50048D8E1 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B6A662B93C1D50048D8E1 /* RootView.swift */; };
 		784B6A6C2B93C4910048D8E1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 784B6A6B2B93C4910048D8E1 /* Localizable.strings */; };
 		786DC5222B93CC000079D433 /* RootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786DC5212B93CC000079D433 /* RootViewModel.swift */; };
@@ -33,7 +33,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78074A2D2B939C29002E29AC /* BitsoKit in Frameworks */,
-				7838B5282B93E4D100B1AB36 /* BitsoBooks in Frameworks */,
+				7838B5282B93E4D100B1AB36 /* BitsoBookModule in Frameworks */,
 				78F2C4C92B9370F100C16672 /* BitsoNet in Frameworks */,
 				78C1379D2B8EB36D0013719A /* BitsoUI in Frameworks */,
 			);
@@ -130,7 +130,7 @@
 				78C1379C2B8EB36D0013719A /* BitsoUI */,
 				78F2C4C82B9370F100C16672 /* BitsoNet */,
 				78074A2C2B939C29002E29AC /* BitsoKit */,
-				7838B5272B93E4D100B1AB36 /* BitsoBooks */,
+				7838B5272B93E4D100B1AB36 /* BitsoBookModule */,
 			);
 			productName = BitsoShell;
 			productReference = 781EC2102B8E37ED004A0757 /* BitsoShell.app */;
@@ -395,9 +395,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = BitsoKit;
 		};
-		7838B5272B93E4D100B1AB36 /* BitsoBooks */ = {
+		7838B5272B93E4D100B1AB36 /* BitsoBookModule */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = BitsoBooks;
+			productName = BitsoBookModule;
 		};
 		78C1379C2B8EB36D0013719A /* BitsoUI */ = {
 			isa = XCSwiftPackageProductDependency;

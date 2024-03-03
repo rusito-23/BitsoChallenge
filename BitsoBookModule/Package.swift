@@ -3,14 +3,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "BitsoBooks",
+    name: "BitsoBookModule",
     platforms: [
         .iOS(.v16),
     ],
     products: [
         .library(
-            name: "BitsoBooks",
-            targets: ["BitsoBooks"]),
+            name: "BitsoBookModule",
+            targets: ["BitsoBookModule"]),
     ],
     dependencies: [
         .package(path: "../../BitsoKit"),
@@ -20,7 +20,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "BitsoBooks",
+            name: "BitsoBookModule",
             dependencies: [
                 "BitsoKit",
                 "BitsoUI",
@@ -28,9 +28,9 @@ let package = Package(
             ],
             path: "Sources"),
         .testTarget(
-            name: "BitsoBooksTests",
+            name: "BitsoBookModuleTests",
             dependencies: [
-                "BitsoBooks",
+                "BitsoBookModule",
                 "BitsoTestKit",
             ],
             path: "Tests"),
