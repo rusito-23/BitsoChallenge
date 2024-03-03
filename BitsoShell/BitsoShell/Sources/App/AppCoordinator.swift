@@ -1,6 +1,7 @@
 import BitsoBookModule
 import BitsoKit
 import BitsoUI
+import BitsoNet
 import SwiftUI
 
 struct AppCoordinator: View {
@@ -15,7 +16,7 @@ struct AppCoordinator: View {
 
     // MARK: Initializer
 
-    init(booksModule: any BookModule = LiveBookModule()) {
+    init(booksModule: any BookModule = LiveBookModule(domain: Environment.sandbox)) {
         self.booksModule = booksModule
     }
 
@@ -24,10 +25,7 @@ struct AppCoordinator: View {
     var body: some View {
         NavigationStack(path: $router.path) {
             RootView()
-                .navigationDestination(
-                    for: BookDestination.self,
-                    destination: booksModule.navigation
-                )
+                .navigation(module: booksModule)
         }
         .environmentObject(router)
     }

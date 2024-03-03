@@ -1,14 +1,21 @@
 import BitsoKit
+import BitsoNet
 import SwiftUI
 import Foundation
 
 /// The ``BookModule`` live implementation.
 public struct LiveBookModule: BookModule {
 
+    // MARK: Properties
+
+    private let domain: Domain
+
     // MARK: Public Initializer
 
     /// Create a books module.
-    public init() {}
+    public init(domain: any Domain) {
+        self.domain = domain
+    }
 
     // MARK: Navigation
 

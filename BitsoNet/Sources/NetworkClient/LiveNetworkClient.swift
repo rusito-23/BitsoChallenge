@@ -3,7 +3,6 @@ import Foundation
 
 // TBD:
 // - add retry system
-// - add logger
 
 /// The live RESTful implementation of the network client protocol.
 ///

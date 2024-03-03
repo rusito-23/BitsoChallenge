@@ -10,7 +10,7 @@ public protocol Module {
     // MARK: Types
 
     /// The destination type associated with this module.
-    associatedtype Destination
+    associatedtype Destination: Hashable
 
     // MARK: Navigation Methods
 
