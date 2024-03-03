@@ -24,7 +24,7 @@ struct RootView: View {
 
     private var button: some View {
         Button {
-            router.navigate(to: BooksDestinations.booksList)
+            router.navigate(to: BooksDestination.booksList)
         } label: {
             Text(viewModel.booksButtonTitle)
                 .font(.body)

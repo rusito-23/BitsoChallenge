@@ -4,21 +4,31 @@ import BitsoUI
 import SwiftUI
 
 struct AppCoordinator: View {
-    let id = UUID()
+
+    // MARK: Observed Properties
+
     @ObservedObject var router = Router()
+
+    // MARK: Modules
+
+    private let booksModule: any BooksModule
+
+    // MARK: Initializer
+
+    init(booksModule: any BooksModule = LiveBooksModule()) {
+        self.booksModule = booksModule
+    }
+
+    // MARK: Body
 
     var body: some View {
         NavigationStack(path: $router.path) {
             RootView()
-                .navigationDestination(for: BooksDestinations.self, destination: navigate)
+                .navigationDestination(
+                    for: BooksDestination.self,
+                    destination: booksModule.navigation
+                )
         }
         .environmentObject(router)
-    }
-
-    @ViewBuilder
-    func navigate(to destination: BooksDestinations) -> some View {
-        switch destination {
-        case .booksList: BooksListView()
-        }
     }
 }
