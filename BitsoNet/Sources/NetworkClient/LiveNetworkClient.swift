@@ -12,6 +12,7 @@ public final class LiveNetworkClient {
 
     // MARK: Private Properties
 
+    private let domain: Domain
     private let urlSession: URLSession
     private let encoder: JSONEncoder
     private let decoder: JSONDecoder
@@ -20,14 +21,17 @@ public final class LiveNetworkClient {
     // MARK: Initializer
 
     /// Create a live RESTful network client.
+    /// - Parameter domain: The required domain for the network call.
     /// - Parameter urlSession: The URL session that will be used to perform the requests. Defaults to the shared instance.
     /// - Parameter encoder: The JSON encoder that will be used to encode the request payloads.
     /// - Parameter decoder: The JSON decoder that will be used to decode the response payloads.
     public init(
+        domain: Domain,
         urlSession: URLSession = .shared,
         encoder: JSONEncoder = JSONEncoder(),
         decoder: JSONDecoder = JSONDecoder()
     ) {
+        self.domain = domain
         self.urlSession = urlSession
         self.encoder = encoder
         self.decoder = decoder
@@ -96,9 +100,9 @@ private extension LiveNetworkClient {
     /// Create the URL including the base URL, the path and the query parameters.
     func makeURL(from endpoint: Endpoint) -> URL? {
         var urlComponents = URLComponents()
-        urlComponents.scheme = endpoint.domain.scheme
-        urlComponents.host = endpoint.domain.host
-        urlComponents.path = endpoint.domain.path ?? ""
+        urlComponents.scheme = domain.scheme
+        urlComponents.host = domain.host
+        urlComponents.path = domain.path ?? ""
         urlComponents.queryItems = endpoint.parameters
         return urlComponents.url?.appendingPathExtension(endpoint.path)
     }

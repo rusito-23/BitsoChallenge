@@ -13,8 +13,11 @@ final class LiveBookService: BookService {
 
     /// Create a new live book service.
     /// - Parameter client: The network client to fetch book data. Defaults to a new `LiveNetworkClient`.
-    init(client: NetworkClient = LiveNetworkClient()) {
-        self.client = client
+    init(
+        domain: Domain = BookDomain(),
+        client: NetworkClient?  = nil
+    ) {
+        self.client = client ?? LiveNetworkClient(domain: domain)
     }
 
     // MARK: Service Conformance

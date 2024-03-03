@@ -2,9 +2,6 @@ import Foundation
 
 /// Describes the required data to make a request to an endpoint.
 public protocol Endpoint {
-    /// The domain targeted by the endpoint.
-    var domain: Domain { get }
-
     /// The ``HTTPMethod`` for the service call.
     var method: HTTP.Method { get }
 

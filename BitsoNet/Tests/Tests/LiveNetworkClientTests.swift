@@ -18,6 +18,7 @@ final class LiveNetworkClientTests: XCTestCase {
 
     // MARK: Constants
 
+    private let domain = DomainMock.valid
     private let endpoint = EndpointMock(method: .post)
 
     // MARK: Set up
@@ -35,6 +36,7 @@ final class LiveNetworkClientTests: XCTestCase {
         responsePayloadData = try encoder.encode(responsePayload)
 
         client = LiveNetworkClient(
+            domain: domain,
             urlSession: .mocked,
             encoder: encoder,
             decoder: decoder
@@ -50,7 +52,7 @@ final class LiveNetworkClientTests: XCTestCase {
 
     func test_perform_withValidPayload_shouldSucceed() async throws {
         // GIVEN
-        URLProtocolMock.add(.data(responsePayloadData), for: endpoint.url)
+        URLProtocolMock.add(.data(responsePayloadData), for: url(from: domain, endpoint))
 
         // WHEN
         let result = await perform(endpoint)
@@ -61,7 +63,12 @@ final class LiveNetworkClientTests: XCTestCase {
 
     func test_perform_withInvalidURL_shouldFail() async {
         // GIVEN
-        let endpoint = EndpointMock(domain: DomainMock.invalid)
+        client = LiveNetworkClient(
+            domain: DomainMock.invalid,
+            urlSession: .mocked,
+            encoder: encoder,
+            decoder: decoder
+        )
 
         // WHEN
         let result = await perform(endpoint)
@@ -72,7 +79,7 @@ final class LiveNetworkClientTests: XCTestCase {
 
     func test_perform_withURLSessionFailure_shouldReturnFailure() async {
         // GIVEN
-        URLProtocolMock.add(.error(ServiceError.unknown), for: endpoint.url)
+        URLProtocolMock.add(.error(ServiceError.unknown), for: url(from: domain, endpoint))
 
         // WHEN
         let result = await perform(endpoint)
@@ -83,7 +90,7 @@ final class LiveNetworkClientTests: XCTestCase {
 
     func test_perform_withClientError_shouldReturnFailure() async {
         // GIVEN
-        URLProtocolMock.add(.response(statusCode: 400), for: endpoint.url)
+        URLProtocolMock.add(.response(statusCode: 400), for: url(from: domain, endpoint))
 
         // WHEN
         let result = await perform(endpoint)
@@ -94,7 +101,7 @@ final class LiveNetworkClientTests: XCTestCase {
 
     func test_perform_withServerError_shouldReturnFailure() async {
         // GIVEN
-        URLProtocolMock.add(.response(statusCode: 500), for: endpoint.url)
+        URLProtocolMock.add(.response(statusCode: 500), for: url(from: domain, endpoint))
 
         // WHEN
         let result = await perform(endpoint)
@@ -105,7 +112,7 @@ final class LiveNetworkClientTests: XCTestCase {
 
     func test_perform_withInfoCode_shouldReturnFailure() async {
         // GIVEN
-        URLProtocolMock.add(.response(statusCode: 100), for: endpoint.url)
+        URLProtocolMock.add(.response(statusCode: 100), for: url(from: domain, endpoint))
 
         // WHEN
         let result = await perform(endpoint)
@@ -116,7 +123,7 @@ final class LiveNetworkClientTests: XCTestCase {
 
     func test_perform_withRedirectCode_shouldReturnFailure() async {
         // GIVEN
-        URLProtocolMock.add(.response(statusCode: 300), for: endpoint.url)
+        URLProtocolMock.add(.response(statusCode: 300), for: url(from: domain, endpoint))
 
         // WHEN
         let result = await perform(endpoint)
@@ -127,7 +134,7 @@ final class LiveNetworkClientTests: XCTestCase {
 
     func test_perform_withUnknownCode_shouldReturnFailure() async {
         // GIVEN
-        URLProtocolMock.add(.response(statusCode: 600), for: endpoint.url)
+        URLProtocolMock.add(.response(statusCode: 600), for: url(from: domain, endpoint))
 
         // WHEN
         let result = await perform(endpoint)
@@ -138,7 +145,7 @@ final class LiveNetworkClientTests: XCTestCase {
 
     func test_perform_withInvalidResponse_shouldReturnFailure() async {
         // GIVEN
-        URLProtocolMock.add(.response(statusCode: 200), for: endpoint.url)
+        URLProtocolMock.add(.response(statusCode: 200), for: url(from: domain, endpoint))
 
         // WHEN
         let result = await perform(endpoint)
@@ -151,7 +158,7 @@ final class LiveNetworkClientTests: XCTestCase {
         // GIVEN
         let headerMocks = [HeaderMock.generic]
         let endpoint = EndpointMock(additionalHeaders: headerMocks)
-        URLProtocolMock.add(.data(responsePayloadData), for: endpoint.url)
+        URLProtocolMock.add(.data(responsePayloadData), for: url(from: domain, endpoint))
 
         // WHEN
         await perform(endpoint)
@@ -168,7 +175,7 @@ final class LiveNetworkClientTests: XCTestCase {
         // GIVEN
         let headerMocks = [HeaderMock.contentTypeXML, HeaderMock.generic]
         let endpoint = EndpointMock(additionalHeaders: headerMocks)
-        URLProtocolMock.add(.data(responsePayloadData), for: endpoint.url)
+        URLProtocolMock.add(.data(responsePayloadData), for: url(from: domain, endpoint))
 
         // WHEN
         await perform(endpoint)
@@ -184,7 +191,7 @@ final class LiveNetworkClientTests: XCTestCase {
     func test_perform_withRequestPayload_shouldBeEncoded() async throws {
         // GIVEN
         let endpoint = EndpointMock(method: .post, requestPayload: requestPayload)
-        URLProtocolMock.add(.data(responsePayloadData), for: endpoint.url)
+        URLProtocolMock.add(.data(responsePayloadData), for: url(from: domain, endpoint))
 
         // WHEN
         await perform(endpoint)
@@ -198,7 +205,7 @@ final class LiveNetworkClientTests: XCTestCase {
     func test_perform_withRequestPayload_whenMethodDoesNotSupportPayload() async throws {
         // GIVEN
         let endpoint = EndpointMock(method: .get, requestPayload: requestPayload)
-        URLProtocolMock.add(.data(responsePayloadData), for: endpoint.url)
+        URLProtocolMock.add(.data(responsePayloadData), for: url(from: domain, endpoint))
 
         // WHEN
         await perform(endpoint)
@@ -211,7 +218,7 @@ final class LiveNetworkClientTests: XCTestCase {
     func test_perform_withoutRequestPayload() async throws {
         // GIVEN
         let endpoint = EndpointMock(method: .get)
-        URLProtocolMock.add(.data(responsePayloadData), for: endpoint.url)
+        URLProtocolMock.add(.data(responsePayloadData), for: url(from: domain, endpoint))
 
         // WHEN
         await perform(endpoint)
@@ -226,7 +233,7 @@ final class LiveNetworkClientTests: XCTestCase {
         encoder.nonConformingFloatEncodingStrategy = .throw
         let invalidPayload = PayloadMock(value: .infinity)
         let endpoint = EndpointMock(method: .post, requestPayload: invalidPayload)
-        URLProtocolMock.add(.data(responsePayloadData), for: endpoint.url)
+        URLProtocolMock.add(.data(responsePayloadData), for: url(from: domain, endpoint))
 
         // WHEN
         let result = await perform(endpoint)
@@ -245,5 +252,15 @@ private extension LiveNetworkClientTests {
         _ endpoint: EndpointMock
     ) async -> Result<PayloadMock, ServiceError> {
         await client.perform(endpoint)
+    }
+
+    /// A util to create the URL from the combination of domain and endpoint.
+    func url(from domain: Domain, _ endpoint: Endpoint) -> URL? {
+        var components = URLComponents()
+        components.scheme = domain.scheme
+        components.host = domain.host
+        components.path = domain.path ?? ""
+        components.queryItems = endpoint.parameters
+        return components.url?.appendingPathExtension(endpoint.path)
     }
 }
