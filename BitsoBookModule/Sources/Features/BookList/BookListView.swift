@@ -56,13 +56,16 @@ struct BookListView<ViewModel: BookListViewModel>: View {
         )
     }
 
-    private func booksListView(_ books: [Book]) -> some View {
-        List(books, id: \.book) { book in
-            Text(book.book)
+    private func booksListView(_ books: [BookListCardViewModel]) -> some View {
+        List(books, id: \.name) { book in
+            BookListCard(viewModel: book)
+                .listRowInsets(EdgeInsets(spacing: .small))
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
         }
-        .refreshable {
-            viewModel.loadBooks()
-        }
+        .scrollContentBackground(.hidden)
+        .refreshable { viewModel.loadBooks() }
+        .padding(Spacing.small.rawValue)
     }
 }
 
@@ -89,33 +92,30 @@ struct BookListView_Previews: PreviewProvider {
 
     static var previews: some View {
         Group {
-            BookListView(
-                viewModel: ViewModelMock(state: .loading)
-            ).previewDisplayName("Loading")
+            BookListView(viewModel: ViewModelMock(state: .loading))
+                .previewDisplayName("Loading")
 
-            BookListView(
-                viewModel: ViewModelMock(state: .empty)
-            ).previewDisplayName("Empty")
+            BookListView(viewModel: ViewModelMock(state: .empty))
+                .previewDisplayName("Empty")
 
-            BookListView(
-                viewModel: ViewModelMock(state: .loaded(books: [
-                    Book(
-                        book: "",
-                        defaultChart: .candle,
-                        minimumAmount: "",
-                        maximumAmount: "",
-                        minimumPrice: "",
-                        maximumPrice: "",
-                        minimumValue: "",
-                        maximumValue: "",
-                        tickSize: ""
-                    ),
-                ]))
-            ).previewDisplayName("Loaded")
+            BookListView(viewModel: ViewModelMock(state: .loaded(books: [
+                BookListCardViewModel(
+                    name: "Book 1",
+                    maximumValue: "$ 150",
+                    minimumValue: "$ 100",
+                    maximumPrice: "$200"
+                ),
+                BookListCardViewModel(
+                    name: "Book 2",
+                    maximumValue: "$ 180",
+                    minimumValue: "$ 120",
+                    maximumPrice: "$230"
+                ),
+            ])))
+            .previewDisplayName("Loaded")
 
-            BookListView(
-                viewModel: ViewModelMock(state: .failed(error: .generic))
-            ).previewDisplayName("Failed")
+            BookListView(viewModel: ViewModelMock(state: .failed(error: .generic)))
+                .previewDisplayName("Failed")
         }
     }
 }
