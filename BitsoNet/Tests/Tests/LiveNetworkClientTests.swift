@@ -79,7 +79,7 @@ final class LiveNetworkClientTests: XCTestCase {
 
     func test_perform_withURLSessionFailure_shouldReturnFailure() async {
         // GIVEN
-        URLProtocolMock.add(.error(ServiceError.unknown), for: url(from: domain, endpoint))
+        URLProtocolMock.add(.error(NetworkError.unknown), for: url(from: domain, endpoint))
 
         // WHEN
         let result = await perform(endpoint)
@@ -248,9 +248,8 @@ final class LiveNetworkClientTests: XCTestCase {
 private extension LiveNetworkClientTests {
     /// A util to perform the service call without having to save the result
     /// or specifying the expected type of the response payload.
-    @discardableResult func perform(
-        _ endpoint: EndpointMock
-    ) async -> Result<PayloadMock, ServiceError> {
+    @discardableResult
+    func perform(_ endpoint: EndpointMock) async -> Result<PayloadMock, NetworkError> {
         await client.perform(endpoint)
     }
 

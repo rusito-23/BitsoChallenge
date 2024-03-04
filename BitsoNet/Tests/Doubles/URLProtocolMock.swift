@@ -64,7 +64,7 @@ final class URLProtocolMock: URLProtocol {
 
         guard let url = request.url, let rule = Self.rules[url] else {
             // We don't have a rule set up for this URL.
-            client?.urlProtocol(self, didFailWithError: ServiceError.invalidRequest)
+            client?.urlProtocol(self, didFailWithError: NetworkError.invalidRequest)
             return
         }
 

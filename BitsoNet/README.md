@@ -28,4 +28,4 @@ Provides a set of constants and utils to prevent using literals when interacting
 
 - [Empty](./Sources/Constants/Empty.swift)
 - [HTTP](./Sources/Constants/HTTP.swift)
-- [ServiceError](./Sources/Constants/ServiceError.swift)
+- [NetworkError](./Sources/Constants/NetworkError.swift)

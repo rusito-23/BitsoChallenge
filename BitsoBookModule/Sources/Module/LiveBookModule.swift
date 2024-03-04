@@ -23,6 +23,7 @@ public struct LiveBookModule: BookModule {
     /// Creates the view from the given destination, transformed as `AnyView`.
     /// - Parameter destination: The ``BookDestination`` to be triggered.
     /// -  Returns: The view to be navigated to.
+    @MainActor
     public func navigation(to destination: BookDestination) -> AnyView {
         AnyView(view(for: destination))
     }
@@ -32,9 +33,11 @@ public struct LiveBookModule: BookModule {
     /// Creates the view from the given destination.
     /// - Parameter destination: The ``BookDestination`` to be triggered.
     /// -  Returns: The view to be navigated to.
-    @ViewBuilder private func view(for destination: BookDestination) -> some View {
+    @ViewBuilder
+    @MainActor
+    private func view(for destination: BookDestination) -> some View {
         switch destination {
-        case .bookList: BookListView()
+        case .bookList: BookListCoordinator(domain: dependencies.domain)
         }
     }
 }
@@ -44,7 +47,7 @@ public struct LiveBookModule: BookModule {
 public extension LiveBookModule {
     /// Describes the dependencies needed to create a ``LiveBookModule``.
     struct Dependencies {
-        private let domain: DomainProvider
+        let domain: DomainProvider
 
         public init(domain: DomainProvider) {
             self.domain = domain

@@ -42,7 +42,7 @@ public final class LiveNetworkClient {
 extension LiveNetworkClient: NetworkClient {
     public func perform<ResponsePayload: Decodable>(
         _ endpoint: Endpoint
-    ) async -> Result<ResponsePayload, ServiceError> {
+    ) async -> Result<ResponsePayload, NetworkError> {
 
         // Build the request for the service call.
         guard let request = makeRequest(from: endpoint) else {
@@ -59,36 +59,30 @@ extension LiveNetworkClient: NetworkClient {
             return .failure(.unknown)
         }
 
-        let status = HTTP.Status(response.statusCode)
-        let responsePayload = try? decoder.decode(ResponsePayload.self, from: data)
-
         // Determine the result of the response and perform an early escape if needed.
-        switch (status, responsePayload) {
-
-        // Service determined that the request is invalid.
-        case (.client, _):
+        let status = HTTP.Status(response.statusCode)
+        switch status {
+        case .client:
             log.error("Request: \(request) failed with error: .invalidRequest")
             return .failure(.invalidRequest)
 
-        // If the call is successful but we're missing the expected payload.
-        case (.success, nil):
-            log.error("Request: \(request) failed with error: .invalidResponse")
-            return .failure(.invalidResponse)
-
-        // There has been a server error.
-        case (.server, _):
-            log.error("Request: \(request) failed with error: .serviceError")
+        case .server:
+            log.error("Request: \(request) failed with service internal error.")
             return .failure(.serviceError(code: response.statusCode))
 
-        // These status won't be handled at the moment.
-        case (.info, _), (.redirect, _), (.unknown, _):
-            log.error("Request: \(request) failed for status: \(status)")
+        case .info, .redirect, .unknown:
+            log.error("Request: \(request) failed for unhandled status: \(status)")
             return .failure(.unknown)
 
-        // If the call is successful and we get the expected payload.
-        case let (.success, .some(responsePayload)):
-            log.info("Request: \(request) succeeded.")
-            return .success(responsePayload)
+        case .success:
+            do {
+                let responsePayload = try decoder.decode(ResponsePayload.self, from: data)
+                log.info("Request: \(request) succeeded.")
+                return .success(responsePayload)
+            } catch let error {
+                log.error("Request: \(request) failed to decode payload with error \(error)")
+                return .failure(.invalidResponse)
+            }
         }
     }
 }
@@ -101,9 +95,9 @@ private extension LiveNetworkClient {
         var urlComponents = URLComponents()
         urlComponents.scheme = domain.scheme
         urlComponents.host = domain.host
-        urlComponents.path = domain.path ?? ""
+        urlComponents.path = [domain.path, endpoint.path].compactMap { $0 }.joined(separator: "/")
         urlComponents.queryItems = endpoint.parameters
-        return urlComponents.url?.appendingPathExtension(endpoint.path)
+        return urlComponents.url
     }
 
     /// Create the request based on the network call details.

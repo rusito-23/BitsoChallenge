@@ -13,5 +13,5 @@ public protocol NetworkClient {
     /// - Returns result: A result that indicates whether the call was successful and provides the retrieved payload or error.
     func perform<ResponsePayload: Decodable>(
         _ endpoint: Endpoint
-    ) async -> Result<ResponsePayload, ServiceError>
+    ) async -> Result<ResponsePayload, NetworkError>
 }

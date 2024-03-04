@@ -14,7 +14,7 @@ final class LiveBookService: BookService {
     /// Create a new live book service.
     /// - Parameter client: The network client to fetch book data. Defaults to a new `LiveNetworkClient`.
     init(
-        domain: DomainProvider = BookDomain(),
+        domain: DomainProvider,
         client: NetworkClient?  = nil
     ) {
         self.client = client ?? LiveNetworkClient(domain: domain)
@@ -23,7 +23,15 @@ final class LiveBookService: BookService {
     // MARK: Service Conformance
 
     func fetchAll() async -> Result<[Book], BookServiceError> {
-        .failure(.generic)
+        let endpoint = BookEndpoint.booksList
+        let result: Result<BookListResponse, NetworkError> = await client.perform(endpoint)
+
+        switch result {
+        case let .success(response):
+            return .success(response.payload)
+        case .failure: // TBD: Provide a more useful error message.
+            return .failure(.generic)
+        }
     }
 
     func fetchDetails(with bookID: String) -> Result<Book, BookServiceError> {
@@ -34,44 +42,39 @@ final class LiveBookService: BookService {
 // MARK: - Endpoint
 
 private extension LiveBookService {
-    struct BookDomain: DomainProvider {
-        let scheme: String = "https"
-        let host: String = "sandbox.bitso.com"
-        let path: String? = "api/v3"
-    }
-
     enum BookEndpoint: Endpoint {
         case booksList
         case bookDetails(id: String)
 
-        var domain: DomainProvider {
-            BookDomain()
-        }
-
-        var method: HTTP.Method {
-            .get
-        }
-
+        /// The endpoint path.
         var path: String {
             switch self {
-            case .booksList: return ""
-            case .bookDetails: return ""
+            case .booksList: return "available_books"
+            case .bookDetails: return "ticker"
             }
         }
 
+        /// The parameters for the endpoint request.
         var parameters: [URLQueryItem] {
             switch self {
             case let .bookDetails(id: id):
-                return  [.init(name: "id", value: id)]
+                return  [.init(name: "book", value: id)]
             default:
                 return []
             }
         }
 
+        /// All endpoints in this service will use the `GET` method.
+        var method: HTTP.Method {
+            .get
+        }
+
+        /// None of the endpoints in this service will use additional headers.
         var additionalHeaders: [Header] {
             []
         }
 
+        /// None of the endpoints in this service will contain a request payload.
         var requestPayload: Encodable? {
             nil
         }

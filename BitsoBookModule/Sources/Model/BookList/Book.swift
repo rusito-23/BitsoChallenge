@@ -32,14 +32,30 @@ struct Book: Decodable {
     let tickSize: String
 }
 
+// MARK: Coding Keys
+
+extension Book {
+    enum CodingKeys: String, CodingKey {
+        case book = "book"
+        case defaultChart = "default_chart"
+        case minimumAmount = "minimum_amount"
+        case maximumAmount = "maximum_amount"
+        case minimumPrice = "minimum_price"
+        case maximumPrice = "maximum_price"
+        case minimumValue = "minimum_value"
+        case maximumValue = "maximum_value"
+        case tickSize = "tick_size"
+    }
+}
+
 // MARK: - Chart
 
 extension Book {
     enum Chart: String, Decodable {
-        case depth
-        case candle
-        case hollow
-        case line
-        case tradingView
+        case depth = "depth"
+        case candle = "candle"
+        case hollow = "hollow"
+        case line = "line"
+        case tradingView = "tradingview"
     }
 }

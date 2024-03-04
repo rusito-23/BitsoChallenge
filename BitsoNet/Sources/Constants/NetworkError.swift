@@ -1,7 +1,7 @@
 import Foundation
 
 /// Describes the different kinds of errors that can be thrown while performing a network call.
-public enum ServiceError: Error {
+public enum NetworkError: Error {
     /// When the request, constructed from the client side, is malformed.
     case invalidRequest
 
@@ -17,4 +17,4 @@ public enum ServiceError: Error {
 
 // MARK: - Equatable Conformance
 
-extension ServiceError: Equatable {}
+extension NetworkError: Equatable {}
