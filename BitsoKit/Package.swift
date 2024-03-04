@@ -4,22 +4,23 @@ import PackageDescription
 
 let package = Package(
     name: "BitsoKit",
-    platforms: [
-        .iOS(.v16),
-    ],
+    platforms: [.iOS(.v16)],
     products: [
         .library(
             name: "BitsoKit",
-            targets: ["BitsoKit"]),
+            targets: ["BitsoKit"]
+        ),
     ],
     targets: [
         .target(
             name: "BitsoKit",
             dependencies: [],
-            path: "Sources"),
+            path: "Sources"
+        ),
         .testTarget(
             name: "BitsoKitTests",
             dependencies: ["BitsoKit"],
-            path: "Tests"),
+            path: "Tests"
+        ),
     ]
 )

@@ -9,13 +9,14 @@ struct RootView: View {
     var body: some View {
         VStack(alignment: .center, spacing: Spacing.small.rawValue) {
             title
+            Spacer()
             button
         }
         .padding(Spacing.medium.rawValue)
     }
 
     private var title: some View {
-        Text(Content.title.localized)
+        Text(Content.title.localize())
             .font(.largeTitle)
     }
 
@@ -23,7 +24,7 @@ struct RootView: View {
         Button {
             router.navigate(to: BookDestination.bookList)
         } label: {
-            Text(Content.booksButtonTitle.localized)
+            Text(Content.booksButtonTitle.localize())
                 .font(.body)
         }
         .tint(.accentColor)

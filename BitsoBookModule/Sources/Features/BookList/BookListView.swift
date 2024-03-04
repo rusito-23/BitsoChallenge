@@ -43,16 +43,16 @@ struct BookListView<ViewModel: BookListViewModel>: View {
     private var emptyView: some View {
         NoticeView(
             icon: .magnifyingGlass,
-            title: Content.noticeTitle.localized,
-            subtitle: Content.emptyResultsMessage.localized
+            title: Content.noticeTitle.localize(bundle: .module),
+            subtitle: Content.emptyResultsMessage.localize(bundle: .module)
         )
     }
 
     private func errorView(_ error: BookServiceError) -> some View {
         NoticeView(
             icon: .error,
-            title: Content.noticeTitle.localized,
-            subtitle: Content.emptyResultsMessage.localized
+            title: Content.noticeTitle.localize(bundle: .module),
+            subtitle: Content.emptyResultsMessage.localize(bundle: .module)
         )
     }
 

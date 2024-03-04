@@ -4,13 +4,13 @@ import PackageDescription
 
 let package = Package(
     name: "BitsoBookModule",
-    platforms: [
-        .iOS(.v16),
-    ],
+    defaultLocalization: "en",
+    platforms: [.iOS(.v16)],
     products: [
         .library(
             name: "BitsoBookModule",
-            targets: ["BitsoBookModule"]),
+            targets: ["BitsoBookModule"]
+        ),
     ],
     dependencies: [
         .package(path: "../../BitsoKit"),
@@ -26,13 +26,16 @@ let package = Package(
                 "BitsoUI",
                 "BitsoNet",
             ],
-            path: "Sources"),
+            path: "Sources",
+            resources: [.process("Resources")]
+        ),
         .testTarget(
             name: "BitsoBookModuleTests",
             dependencies: [
                 "BitsoBookModule",
                 "BitsoTestKit",
             ],
-            path: "Tests"),
+            path: "Tests"
+        ),
     ]
 )

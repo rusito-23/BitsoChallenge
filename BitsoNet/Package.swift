@@ -4,13 +4,12 @@ import PackageDescription
 
 let package = Package(
     name: "BitsoNet",
-    platforms: [
-        .iOS(.v16),
-    ],
+    platforms: [.iOS(.v16)],
     products: [
         .library(
             name: "BitsoNet",
-            targets: ["BitsoNet"]),
+            targets: ["BitsoNet"]
+        ),
     ],
     dependencies: [
         .package(path: "../BitsoKit"),
@@ -18,15 +17,13 @@ let package = Package(
     targets: [
         .target(
             name: "BitsoNet",
-            dependencies: [
-                "BitsoKit",
-            ],
-            path: "Sources"),
+            dependencies: ["BitsoKit"],
+            path: "Sources"
+        ),
         .testTarget(
             name: "BitsoNetTests",
-            dependencies: [
-                "BitsoNet",
-            ],
-            path: "Tests"),
+            dependencies: ["BitsoNet"],
+            path: "Tests"
+        ),
     ]
 )

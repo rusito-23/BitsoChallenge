@@ -29,6 +29,9 @@ public struct NoticeView: View {
             Image(systemName: icon.rawValue)
                 .resizable()
                 .frame(width: iconSize.rawValue, height: iconSize.rawValue)
+
+            Text(subtitle)
+                .font(.title2)
         }
     }
 }
