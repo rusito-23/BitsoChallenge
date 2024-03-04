@@ -29,13 +29,13 @@ final class LiveBookService: BookService {
         switch result {
         case let .success(response):
             return .success(response.payload)
-        case .failure: // TBD: Provide a more useful error message.
-            return .failure(.generic)
+        case .failure:
+            return .failure(.network)
         }
     }
 
     func fetchDetails(with bookID: String) -> Result<Book, BookServiceError> {
-        .failure(.generic)
+        .failure(.network)
     }
 }
 

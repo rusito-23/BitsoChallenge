@@ -1,11 +1,13 @@
 import BitsoUI
+import BitsoKit
 import SwiftUI
 
-/// Displays the card of the
+/// Displays the Book cards for the book list.
 struct BookListCard: View {
 
     // MARK: Properties
 
+    @EnvironmentObject var router: Router
     private let viewModel: BookListCardViewModel
 
     // MARK: Initializer
@@ -17,10 +19,16 @@ struct BookListCard: View {
     // MARK: Body
 
     var body: some View {
-        CardContainer {
-            content
+        Button {
+            router.navigate(to: BookInternalDestination.bookDetail(id: viewModel.id))
+        } label: {
+            CardContainer {
+                content
+            }
+            .frame(maxWidth: .infinity)
+            .contentShape(Rectangle())
         }
-        .frame(maxWidth: .infinity)
+        .buttonStyle(.plain)
     }
 
     private var content: some View {

@@ -1,0 +1,16 @@
+
+# Important
+
+- [] Add title to book list
+- [] Loading indicator for book list
+- [] Prevent loading twice
+- [] Add BookDetails support
+- [] Add refresh timer to BookList
+- [] Format values in BookList
+- [] Add unit tests
+
+# Follow-ups
+
+- [] Add snapshot tests
+- [] Find a better approach for Environment
+- [] Look into better view model DI

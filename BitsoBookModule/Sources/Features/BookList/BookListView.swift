@@ -57,7 +57,7 @@ struct BookListView<ViewModel: BookListViewModel>: View {
     }
 
     private func booksListView(_ books: [BookListCardViewModel]) -> some View {
-        List(books, id: \.name) { book in
+        List(books, id: \.id) { book in
             BookListCard(viewModel: book)
                 .listRowInsets(EdgeInsets(spacing: .small))
                 .listRowBackground(Color.clear)
@@ -114,7 +114,7 @@ struct BookListView_Previews: PreviewProvider {
             ])))
             .previewDisplayName("Loaded")
 
-            BookListView(viewModel: ViewModelMock(state: .failed(error: .generic)))
+            BookListView(viewModel: ViewModelMock(state: .failed(error: .network)))
                 .previewDisplayName("Failed")
         }
     }

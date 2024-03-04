@@ -4,7 +4,7 @@ import Foundation
 /// - Note: Ignores _fees_ object.
 struct Book: Decodable {
     /// The order book symbol.
-    let book: String
+    let name: String
 
     /// Price chart that provides information about the current and past state of the market.
     let defaultChart: Chart
@@ -36,7 +36,7 @@ struct Book: Decodable {
 
 extension Book {
     enum CodingKeys: String, CodingKey {
-        case book = "book"
+        case name = "book"
         case defaultChart = "default_chart"
         case minimumAmount = "minimum_amount"
         case maximumAmount = "maximum_amount"

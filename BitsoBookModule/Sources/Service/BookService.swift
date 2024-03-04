@@ -2,7 +2,8 @@ import Foundation
 
 /// Describes the errors that can occur during ``BookService`` operations.
 enum BookServiceError: Error {
-    case generic
+    /// The only case we have for now is `network` to represent network call errors.
+    case network
 }
 
 /// Describes  the requirements for the service that provides everything related to books.

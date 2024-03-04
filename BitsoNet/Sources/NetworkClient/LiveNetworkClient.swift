@@ -1,9 +1,6 @@
 import BitsoKit
 import Foundation
 
-// TBD:
-// - add retry system
-
 /// The live RESTful implementation of the network client protocol.
 ///
 /// - Note: All payloads used in this client will be coded into/from JSON.

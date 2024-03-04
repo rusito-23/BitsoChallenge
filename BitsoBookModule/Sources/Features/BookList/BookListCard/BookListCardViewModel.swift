@@ -6,6 +6,7 @@ struct BookListCardViewModel {
 
     // MARK: Properties
 
+    let id: String
     let name: String
     let maximumValue: String
     let minimumValue: String
@@ -19,6 +20,7 @@ struct BookListCardViewModel {
         minimumValue: String,
         maximumPrice: String
     ) {
+        self.id = name
         self.name = name
         self.maximumValue = maximumValue
         self.minimumValue = minimumValue
@@ -26,9 +28,10 @@ struct BookListCardViewModel {
     }
 
     init(from book: Book) {
-        name = book.book.uppercased()
-        maximumValue = book.maximumValue
-        minimumValue = book.minimumValue
-        maximumPrice = book.maximumPrice
+        self.id = book.name
+        self.name = book.name.uppercased().split(separator: "_").joined(separator: " ")
+        self.maximumValue = book.maximumValue
+        self.minimumValue = book.minimumValue
+        self.maximumPrice = book.maximumPrice
     }
 }
