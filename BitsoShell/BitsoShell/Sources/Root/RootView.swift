@@ -5,20 +5,17 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject private var router: Router
-        private let viewModel = RootViewModel()
 
     var body: some View {
-        VStack(spacing: Spacing.small.rawValue) {
+        VStack(alignment: .center, spacing: Spacing.small.rawValue) {
             title
-            Spacer()
             button
-            Spacer()
         }
         .padding(Spacing.medium.rawValue)
     }
 
     private var title: some View {
-        Text(viewModel.title)
+        Text(Content.title.localized)
             .font(.largeTitle)
     }
 
@@ -26,12 +23,21 @@ struct RootView: View {
         Button {
             router.navigate(to: BookDestination.bookList)
         } label: {
-            Text(viewModel.booksButtonTitle)
+            Text(Content.booksButtonTitle.localized)
                 .font(.body)
         }
         .tint(.accentColor)
         .controlSize(.large)
         .buttonStyle(.bordered)
+    }
+}
+
+// MARK: - Content
+
+private extension RootView {
+    enum Content: String, LocalizableContent {
+        case title = "WELCOME_TITLE"
+        case booksButtonTitle = "BOOKS_BUTTON_TITLE"
     }
 }
 

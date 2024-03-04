@@ -1,0 +1,9 @@
+
+// MARK: - Common
+
+"OOPS" = "Oops!";
+
+// MARK: - Wallet List
+
+"BOOK_LIST_EMPTY_RESULT_MESSAGE" = "We could not find any books.";
+"BOOK_LIST_ERROR_MESSAGE" = "Something went wrong."

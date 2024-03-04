@@ -1,3 +1,5 @@
+import BitsoUI
+import BitsoKit
 import SwiftUI
 
 struct BookListView<ViewModel: BookListViewModel>: View {
@@ -17,7 +19,7 @@ struct BookListView<ViewModel: BookListViewModel>: View {
     var body: some View {
         ZStack {
             switch viewModel.state {
-            case .initial, .loading:
+            case .loading:
                 shimmerView
             case .empty:
                 emptyView
@@ -39,11 +41,19 @@ struct BookListView<ViewModel: BookListViewModel>: View {
     }
 
     private var emptyView: some View {
-        Text("Empty")
+        NoticeView(
+            icon: .magnifyingGlass,
+            title: Content.noticeTitle.localized,
+            subtitle: Content.emptyResultsMessage.localized
+        )
     }
 
     private func errorView(_ error: BookServiceError) -> some View {
-        Text("Error")
+        NoticeView(
+            icon: .error,
+            title: Content.noticeTitle.localized,
+            subtitle: Content.emptyResultsMessage.localized
+        )
     }
 
     private func booksListView(_ books: [Book]) -> some View {
@@ -55,3 +65,58 @@ struct BookListView<ViewModel: BookListViewModel>: View {
         }
     }
 }
+
+// MARK: - Content
+
+private extension BookListView {
+    enum Content: String, LocalizableContent {
+        case noticeTitle = "OOPS"
+        case emptyResultsMessage = "BOOK_LIST_EMPTY_RESULT_MESSAGE"
+        case errorMessage = "BOOK_LIST_ERROR_MESSAGE"
+    }
+}
+
+// MARK: - Previews
+
+#if DEBUG
+@available(*, unavailable)
+struct BookListView_Previews: PreviewProvider {
+    final class ViewModelMock: BookListViewModel {
+        var state: BookListState
+        init(state: BookListState) { self.state = state }
+        func loadBooks() -> Task<Void, Never> { Task {} }
+    }
+
+    static var previews: some View {
+        Group {
+            BookListView(
+                viewModel: ViewModelMock(state: .loading)
+            ).previewDisplayName("Loading")
+
+            BookListView(
+                viewModel: ViewModelMock(state: .empty)
+            ).previewDisplayName("Empty")
+
+            BookListView(
+                viewModel: ViewModelMock(state: .loaded(books: [
+                    Book(
+                        book: "",
+                        defaultChart: .candle,
+                        minimumAmount: "",
+                        maximumAmount: "",
+                        minimumPrice: "",
+                        maximumPrice: "",
+                        minimumValue: "",
+                        maximumValue: "",
+                        tickSize: ""
+                    ),
+                ]))
+            ).previewDisplayName("Loaded")
+
+            BookListView(
+                viewModel: ViewModelMock(state: .failed(error: .generic))
+            ).previewDisplayName("Failed")
+        }
+    }
+}
+#endif

@@ -3,7 +3,6 @@ import Foundation
 // MARK: - State
 
 enum BookListState {
-    case initial
     case loading
     case empty
     case loaded(books: [Book])
@@ -30,7 +29,7 @@ final class LiveBookListViewModel: BookListViewModel {
 
     // MARK: Published Properties
 
-    @Published var state: BookListState = .initial
+    @Published var state: BookListState = .loading
 
     // MARK: Private Properties
 
