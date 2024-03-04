@@ -2,7 +2,8 @@ import BitsoUI
 import BitsoKit
 import SwiftUI
 
-/// Displays the Book cards for the book list.
+/// Displays a book card with its basic information.
+/// When tapped, will navigate to the book details.
 struct BookListCard: View {
 
     // MARK: Properties
@@ -20,7 +21,7 @@ struct BookListCard: View {
 
     var body: some View {
         Button {
-            router.navigate(to: BookInternalDestination.bookDetail(id: viewModel.id))
+            router.navigate(to: BookInternalDestination.bookDetails(id: viewModel.id))
         } label: {
             CardContainer {
                 content

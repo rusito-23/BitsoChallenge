@@ -2,22 +2,22 @@ import BitsoNet
 import SwiftUI
 
 @MainActor
-struct BookDetailCoordinator: View {
+struct BookDetailsCoordinator: View {
 
     // MARK: Properties
 
-    private let viewModel: LiveBookDetailViewModel
+    private let viewModel: LiveBookDetailsViewModel
 
     // MARK: Initializer
 
     init(bookID: String, domain: DomainProvider) {
         let service = LiveBookService(domain: domain)
-        self.viewModel = LiveBookDetailViewModel(bookID: bookID, service: service)
+        self.viewModel = LiveBookDetailsViewModel(bookID: bookID, service: service)
     }
 
     // MARK: Body
 
     var body: some View {
-        BookDetailView(viewModel: viewModel)
+        BookDetailsView(viewModel: viewModel)
     }
 }

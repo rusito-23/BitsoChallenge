@@ -3,18 +3,21 @@ import Foundation
 
 // MARK: - State
 
-enum BookDetailState {
+enum BookDetailsViewState {
     case loading
-    case loaded
+    case loaded(details: BookDetails)
     case failed(error: BookServiceError)
 }
 
 // MARK: - Protocol
 
 @MainActor
-protocol BookDetailViewModel: ObservableObject {
+protocol BookDetailsViewModel: ObservableObject {
+    /// The title of the view. Updates to display the name of the book once loaded.
+    var title: String? { get }
+
     /// The current state of the view.
-    var state: BookDetailState { get }
+    var state: BookDetailsViewState { get }
 
     /// Loads the details for the book.
     /// - Returns: The discardable task that will perform the load.
@@ -25,11 +28,12 @@ protocol BookDetailViewModel: ObservableObject {
 // MARK: - Live
 
 @MainActor
-final class LiveBookDetailViewModel: BookDetailViewModel {
+final class LiveBookDetailsViewModel: BookDetailsViewModel {
 
     // MARK: Published Properties
 
-    @Published private(set) var state: BookDetailState = .loading
+    @Published private(set) var title: String?
+    @Published private(set) var state: BookDetailsViewState = .loading
 
     // MARK: Private Properties
 
@@ -50,8 +54,9 @@ final class LiveBookDetailViewModel: BookDetailViewModel {
         Task {
             let result = await service.fetchDetails(with: bookID)
             switch result {
-            case .success:
-                break
+            case let .success(details):
+                title = details.name
+                state = .loaded(details: details)
             case let .failure(error):
                 state = .failed(error: error)
             }

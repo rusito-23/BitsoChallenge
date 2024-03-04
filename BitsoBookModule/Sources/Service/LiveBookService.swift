@@ -24,18 +24,26 @@ final class LiveBookService: BookService {
 
     func fetchAll() async -> Result<[Book], BookServiceError> {
         let endpoint = BookEndpoint.booksList
-        let result: Result<BookListResponse, NetworkError> = await client.perform(endpoint)
+        let result: Result<[Book], NetworkError> = await client.perform(endpoint)
 
         switch result {
-        case let .success(response):
-            return .success(response.payload)
+        case let .success(books):
+            return .success(books)
         case .failure:
             return .failure(.network)
         }
     }
 
-    func fetchDetails(with bookID: String) -> Result<Book, BookServiceError> {
-        .failure(.network)
+    func fetchDetails(with bookID: String) async -> Result<BookDetails, BookServiceError> {
+        let endpoint = BookEndpoint.bookDetails(id: bookID)
+        let result: Result<BookDetails, NetworkError> = await client.perform(endpoint)
+
+        switch result {
+        case let .success(bookDetails):
+            return .success(bookDetails)
+        case .failure:
+            return .failure(.network)
+        }
     }
 }
 

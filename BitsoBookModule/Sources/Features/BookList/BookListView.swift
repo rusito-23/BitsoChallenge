@@ -20,7 +20,7 @@ struct BookListView<ViewModel: BookListViewModel>: View {
         ZStack {
             switch viewModel.state {
             case .loading:
-                shimmerView
+                loadingView
             case .empty:
                 emptyView
             case let .failed(error: error):
@@ -36,7 +36,7 @@ struct BookListView<ViewModel: BookListViewModel>: View {
 
     // MARK: Private Views
 
-    private var shimmerView: some View {
+    private var loadingView: some View {
         Text("Loading")
     }
 

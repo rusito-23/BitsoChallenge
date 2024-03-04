@@ -1,13 +1,15 @@
 
 # Important
 
+- [] Add BookDetails support
+- [] Support better error names
+- [] Format values in BookList
+- [] Add refresh timer to BookList
 - [] Add title to book list
 - [] Loading indicator for book list
 - [] Prevent loading twice
-- [] Add BookDetails support
-- [] Add refresh timer to BookList
-- [] Format values in BookList
 - [] Add unit tests
+- [] Rename book ID to name
 
 # Follow-ups
 

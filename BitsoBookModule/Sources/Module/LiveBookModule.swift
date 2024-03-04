@@ -56,8 +56,8 @@ public struct LiveBookModule: BookModule {
     @MainActor
     private func internalView(for destination: BookInternalDestination) -> some View {
         switch destination {
-        case let .bookDetail(id: bookID):
-            BookDetailCoordinator(bookID: bookID, domain: dependencies.domain)
+        case let .bookDetails(id: bookID):
+            BookDetailsCoordinator(bookID: bookID, domain: dependencies.domain)
         }
     }
 
