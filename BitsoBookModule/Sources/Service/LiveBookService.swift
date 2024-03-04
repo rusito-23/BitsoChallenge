@@ -12,12 +12,19 @@ final class LiveBookService: BookService {
     // MARK: Initializer
 
     /// Create a new live book service.
-    /// - Parameter client: The network client to fetch book data. Defaults to a new `LiveNetworkClient`.
-    init(
-        domain: DomainProvider,
-        client: NetworkClient?  = nil
-    ) {
-        self.client = client ?? LiveNetworkClient(domain: domain)
+    /// - Parameter client: The network client that will be used to perform the network calls.
+    init(client: any NetworkClient) {
+        self.client = client
+    }
+
+    /// Create a new live book service.
+    /// - Parameter domain: The component that provides the domain with which the service needs to communicate.
+    convenience init(domain: DomainProvider) {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+
+        let client = LiveNetworkClient(domain: domain, decoder: decoder)
+        self.init(client: client)
     }
 
     // MARK: Service Conformance
