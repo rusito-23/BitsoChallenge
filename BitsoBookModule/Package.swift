@@ -16,6 +16,7 @@ let package = Package(
         .package(path: "../../BitsoKit"),
         .package(path: "../../BitsoUI"),
         .package(path: "../../BitsoNet"),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.12.0"),
     ],
     targets: [
         .target(
@@ -35,6 +36,14 @@ let package = Package(
             ],
             path: "Tests",
             resources: [.process("Resources")]
+        ),
+        .testTarget(
+            name: "BitsoBookModuleSnapshotTests",
+            dependencies: [
+                "BitsoBookModule",
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+            ],
+            path: "SnapshotTests"
         ),
     ]
 )
