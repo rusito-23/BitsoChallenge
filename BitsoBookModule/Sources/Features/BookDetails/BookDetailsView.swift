@@ -67,11 +67,7 @@ struct BookDetailsView_Previews: PreviewProvider {
     final class ViewModelMock: BookDetailsViewModeling {
         var title: String? = "BTC MXN"
         var state: BookDetailsViewState = .loading
-
-        init(state: BookDetailsViewState) {
-            self.state = state
-        }
-
+        init(state: BookDetailsViewState) { self.state = state }
         func load() -> Task<Void, Never> { Task {} }
     }
 

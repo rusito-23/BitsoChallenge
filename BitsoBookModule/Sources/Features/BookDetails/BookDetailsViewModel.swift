@@ -49,6 +49,7 @@ final class BookDetailsViewModel: BaseBookViewModel, BookDetailsViewModeling {
     @discardableResult
     func load() -> Task<Void, Never> {
         Task {
+            state = .loading
             let result = await service.fetchDetails(with: bookID)
             switch result {
 

@@ -25,6 +25,7 @@ struct BookListView<ViewModel: BookListViewModeling>: View {
         .navigationTitle(viewModel.title)
         .onAppear {
             viewModel.loadBooks()
+            viewModel.startPeriodicReload()
         }
     }
 }
@@ -40,7 +41,9 @@ extension BookListView {
                 .listRowSeparator(.hidden)
         }
         .scrollContentBackground(.hidden)
-        .refreshable { viewModel.loadBooks() }
+        .refreshable {
+            viewModel.loadBooks()
+        }
     }
 }
 
@@ -53,6 +56,7 @@ struct BookListView_Previews: PreviewProvider {
         var title: String = "All Books"
         var state: BookListState
         init(state: BookListState) { self.state = state }
+        func startPeriodicReload() {}
         func loadBooks() -> Task<Void, Never> { Task {} }
     }
 

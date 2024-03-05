@@ -6,11 +6,11 @@
 - [x] Support better service error codes
 - [x] Loading indicator for book list
 - [x] Find a better approach for Environment
+- [x] Format values
+- [x] Add refresh timer to BookList
+- [x] Add title to book list
+- [x] Prevent loading twice
 
-- [] Format values
-- [] Add refresh timer to BookList
-- [] Add title to book list
-- [] Prevent loading twice
 - [] Add unit tests
 - [] Rename book ID to name
 
