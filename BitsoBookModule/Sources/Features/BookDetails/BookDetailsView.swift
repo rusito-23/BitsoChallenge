@@ -2,24 +2,17 @@ import BitsoUI
 import SwiftUI
 
 struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
-
-    // MARK: Properties
-
     @StateObject private var viewModel: ViewModel
-
-    // MARK: Initializer
 
     init(viewModel: ViewModel) {
         _viewModel = .init(wrappedValue: viewModel)
     }
 
-    // MARK: Body
-
     var body: some View {
         ZStack {
             switch viewModel.state {
             case .loading:
-                loadingView
+                ProgressView()
             case let .failed(error: error):
                 errorView(error)
             case let .loaded(sections):
@@ -31,30 +24,28 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
             viewModel.load()
         }
     }
+}
 
-    // MARK: Private Views
+// MARK: - Private Views
 
-    private var loadingView: some View {
-        Text("Loading")
-    }
-
-    private func errorView(_ error: BookServiceError) -> some View {
+private extension BookDetailsView {
+    func errorView(_ error: BookServiceError) -> some View {
         NoticeView(
             icon: .error,
             title: "",
-            subtitle: ""
+            message: ""
             // title: Content.noticeTitle.localize(bundle: .module),
             // subtitle: Content.emptyResultsMessage.localize(bundle: .module)
         )
     }
 
-    private func bookDetailsView(_ sections: [BookDetailsViewState.Section]) -> some View {
+    func bookDetailsView(_ sections: [BookDetailsViewState.Section]) -> some View {
         VStack(spacing: Spacing.medium.rawValue) {
             Text(viewModel.title ?? "")
                 .font(.largeTitle)
 
             ForEach(sections, id: \.self) { section in
-                CardContainer {
+                CardView {
                     displaySection(section)
                 }
             }
@@ -64,7 +55,7 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
     }
 
     @ViewBuilder
-    private func displaySection(_ section: BookDetailsViewState.Section) -> some View {
+    func displaySection(_ section: BookDetailsViewState.Section) -> some View {
         switch section {
         case let .history(volume: volume, high: high, change: change):
             historySection(volume: volume, high: high, change: change)
@@ -73,7 +64,7 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
         }
     }
 
-    private func historySection(volume: String, high: String, change: String) -> some View {
+    func historySection(volume: String, high: String, change: String) -> some View {
         VStack(spacing: Spacing.medium.rawValue) {
             value(label: "Volume", value: volume)
             value(label: "High", value: high)
@@ -81,14 +72,14 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
         }
     }
 
-    private func bidSection(ask: String, bid: String) -> some View {
+    func bidSection(ask: String, bid: String) -> some View {
         VStack(spacing: Spacing.medium.rawValue) {
             value(label: "Ask", value: ask)
             value(label: "Bid", value: bid)
         }
     }
 
-    private func value(label: String, value: String) -> some View {
+    func value(label: String, value: String) -> some View {
         HStack {
             Text(label).font(.callout.weight(.light))
             Spacer()

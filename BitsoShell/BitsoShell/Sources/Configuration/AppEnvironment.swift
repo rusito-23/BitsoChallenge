@@ -1,13 +1,11 @@
 import BitsoNet
 import Foundation
 
-enum Environment {
+enum AppEnvironment {
     case sandbox
 }
 
-// MARK: - Domain Provider Conformance
-
-extension Environment: DomainProvider {
+extension AppEnvironment: APIEnvironment {
     /// All environments should use HTTPS.
     var scheme: String {
         "https"

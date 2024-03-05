@@ -4,11 +4,11 @@ import BitsoUI
 import BitsoNet
 import SwiftUI
 
-// TBD: Docstrings
+/// The coordinator for the whole application.
+///
+/// Will hols all the available modules, the main navigation stack, and the navigation router.
+/// Will also determine the first navigation view.
 struct AppCoordinator: View {
-
-    // MARK: Observed Properties
-
     @ObservedObject var router = Router()
 
     // MARK: Modules
@@ -21,8 +21,8 @@ struct AppCoordinator: View {
         self.bookModule = bookModule
     }
 
-    init(configuration: Configuration) {
-        self.bookModule = LiveBookModule(dependencies: .init(domain: configuration.environment))
+    init(environment: APIEnvironment) {
+        self.bookModule = LiveBookModule(environment: environment)
     }
 
     // MARK: Body

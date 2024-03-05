@@ -5,7 +5,7 @@ import Foundation
 enum BookListState {
     case loading
     case empty
-    case loaded(books: [BookListCardViewModel])
+    case loaded(books: [BookCardViewModel])
     case failed(error: BookServiceError)
 }
 
@@ -51,7 +51,7 @@ final class LiveBookListViewModel: BookListViewModel {
             case let .success(books) where books.isEmpty:
                 state = .empty
             case let .success(books):
-                let books = books.map { BookListCardViewModel(from: $0) }
+                let books = books.map { BookCardViewModel(from: $0) }
                 state = .loaded(books: books)
             case let .failure(failure):
                 state = .failed(error: failure)

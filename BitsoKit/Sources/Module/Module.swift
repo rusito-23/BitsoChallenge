@@ -1,10 +1,7 @@
 import SwiftUI
 
 /// Describes the requirements for module exposure classes.
-/// Module will expose publicly some functionality that needs to be triggered externally, such as:
-/// - navigation
-/// - app lifecycle
-/// - universal link handling
+/// These will serve as entry points to navigate to a module.
 public protocol Module {
 
     // MARK: Types
@@ -12,7 +9,7 @@ public protocol Module {
     /// The destination type associated with this module.
     associatedtype Destination: Hashable
 
-    // MARK: Navigation Methods
+    // MARK: Methods
 
     /// Provides the view associated with a given destination.
     /// - Parameter destination: The nav destination.

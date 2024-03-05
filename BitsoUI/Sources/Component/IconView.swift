@@ -1,10 +1,13 @@
 import SwiftUI
 
-/// Displays a system icon with the given size.
+/// Display a system icon with a given size.
 public struct IconView: View {
     private let icon: Icon
     private let size: IconSize
 
+    /// Create a new icon view.
+    /// - Parameter icon: The ``Icon`` to be displayed.
+    /// - Parameter size: The ``IconSize`` to resize the view.
     public init(icon: Icon, size: IconSize) {
         self.icon = icon
         self.size = size

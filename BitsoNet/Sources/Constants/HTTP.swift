@@ -3,22 +3,6 @@ import Foundation
 /// Holds constants to interact with HTTP APIs.
 public struct HTTP {}
 
-// MARK: - Headers
-
-extension HTTP {
-    /// Determines the headers that can be used by default in all network calls.
-    struct Headers {
-        /// The header that dictates the content type.
-        enum ContentType: String, Header {
-            case json = "application/json"
-
-            var key: String {
-                "Content-Type"
-            }
-        }
-    }
-}
-
 // MARK: - Method
 
 public extension HTTP {
@@ -63,6 +47,22 @@ extension HTTP {
             case 400...499: self = .client
             case 500...599: self = .server
             default: self = .unknown
+            }
+        }
+    }
+}
+
+// MARK: - Headers
+
+extension HTTP {
+    /// Determines the headers that can be used by default in all network calls.
+    struct Headers {
+        /// The header that dictates the content type.
+        enum ContentType: String, Header {
+            case json = "application/json"
+
+            var key: String {
+                "Content-Type"
             }
         }
     }

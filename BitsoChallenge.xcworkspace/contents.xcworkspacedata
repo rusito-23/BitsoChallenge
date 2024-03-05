@@ -11,9 +11,6 @@
       location = "group:BitsoNet">
    </FileRef>
    <FileRef
-      location = "group:BitsoTestKit">
-   </FileRef>
-   <FileRef
       location = "group:BitsoUI">
    </FileRef>
    <FileRef

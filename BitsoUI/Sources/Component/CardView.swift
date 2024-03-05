@@ -1,17 +1,12 @@
 import SwiftUI
 
 /// A generic component to wrap content in a card.
-public struct CardContainer<Content: View>: View {
-
-    // MARK: Properties
-
+public struct CardView<Content: View>: View {
     private let padding: Spacing
     private let radius: Border.Radius
     private let borderWidth: Border.Width
     private let borderColor: Color
     private let content: Content
-
-    // MARK: Initializer
 
     /// Creates a new card container.
     /// - Parameter padding: The spacing to be used for the content inside the card. Defaults to `medium`.
@@ -33,8 +28,6 @@ public struct CardContainer<Content: View>: View {
         self.content = content()
     }
 
-    // MARK: Body
-
     public var body: some View {
         content
             .padding(padding.rawValue)
@@ -52,44 +45,29 @@ public struct CardContainer<Content: View>: View {
 struct CardContainer_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            CardContainer {
-                Text("Card Preview")
-                    .font(.title)
-                    .frame(maxWidth: .infinity)
+            CardView {
+                Text("Card Preview").font(.title)
             }
 
-            CardContainer {
+            CardView {
                 HStack {
-                    IconView(
-                        icon: .magnifyingGlass,
-                        size: .medium
-                    )
-
-                    Text("Card Preview with Icon")
-                        .font(.title)
+                    IconView(icon: .magnifyingGlass, size: .medium)
+                    Text("Card Preview with Icon").font(.title)
                 }
-                .frame(maxWidth: .infinity)
             }
 
-            CardContainer {
+            CardView {
                 HStack {
-                    IconView(
-                        icon: .magnifyingGlass,
-                        size: .medium
-                    )
-
+                    IconView(icon: .magnifyingGlass, size: .medium)
                     VStack {
-                        Text("Card Preview with Icon")
-                            .font(.title)
-
-                        Text("and a small subtitle")
-                            .font(.title3)
+                        Text("Card Preview with Icon").font(.title)
+                        Text("and a small subtitle").font(.title3)
                     }
                 }
-                .frame(maxWidth: .infinity)
             }
         }
         .padding(Spacing.small.rawValue)
+        .frame(maxWidth: .infinity)
     }
 }
 #endif

@@ -1,15 +1,9 @@
 import BitsoNet
 import Foundation
 
-/// The live implementation of ``BookService``.
-final class LiveBookService: BookService {
-
-    // MARK: Private Properties
-
-    /// The network client to fetch book data. Defaults to a new `LiveNetworkClient`.
+/// The live implementation of  the ``BookService`` protocol, using the network client to retrieve the required data.
+final class LiveBookService {
     private let client: NetworkClient
-
-    // MARK: Initializer
 
     /// Create a new live book service.
     /// - Parameter client: The network client that will be used to perform the network calls.
@@ -18,19 +12,20 @@ final class LiveBookService: BookService {
     }
 
     /// Create a new live book service.
-    /// - Parameter domain: The component that provides the domain with which the service needs to communicate.
-    convenience init(domain: DomainProvider) {
+    /// - Parameter environment: The component that provides the environment with which the service needs to communicate.
+    convenience init(environment: APIEnvironment) {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-
-        let client = LiveNetworkClient(domain: domain, decoder: decoder)
+        let client = LiveNetworkClient(environment: environment, decoder: decoder)
         self.init(client: client)
     }
+}
 
-    // MARK: Service Conformance
+// MARK: - Service Conformance
 
+extension LiveBookService: BookService {
     func fetchAll() async -> Result<[Book], BookServiceError> {
-        let endpoint = BookEndpoint.booksList
+        let endpoint = Endpoint.booksList
         let result: Result<[Book], NetworkError> = await client.perform(endpoint)
 
         switch result {
@@ -42,7 +37,7 @@ final class LiveBookService: BookService {
     }
 
     func fetchDetails(with bookID: String) async -> Result<BookDetails, BookServiceError> {
-        let endpoint = BookEndpoint.bookDetails(id: bookID)
+        let endpoint = Endpoint.bookDetails(id: bookID)
         let result: Result<BookDetails, NetworkError> = await client.perform(endpoint)
 
         switch result {
@@ -57,7 +52,7 @@ final class LiveBookService: BookService {
 // MARK: - Endpoint
 
 private extension LiveBookService {
-    enum BookEndpoint: Endpoint {
+    enum Endpoint: BitsoNet.Endpoint {
         case booksList
         case bookDetails(id: String)
 

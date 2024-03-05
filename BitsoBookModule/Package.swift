@@ -15,7 +15,6 @@ let package = Package(
     dependencies: [
         .package(path: "../../BitsoKit"),
         .package(path: "../../BitsoUI"),
-        .package(path: "../../BitsoTestKit"),
         .package(path: "../../BitsoNet"),
     ],
     targets: [
@@ -33,7 +32,6 @@ let package = Package(
             name: "BitsoBookModuleTests",
             dependencies: [
                 "BitsoBookModule",
-                "BitsoTestKit",
             ],
             path: "Tests"
         ),

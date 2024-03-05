@@ -14,22 +14,18 @@ import Foundation
 /// }
 /// ```
 public final class Router: ObservableObject {
-
-    // MARK: Properties
-
-    /// The published navigation path.
     @Published public var path: NavigationPath
-
-    // MARK: Initializer
 
     /// Create a new router.
     /// - Parameter path: The navigation path. Empty path by default.
     public init(path: NavigationPath = NavigationPath()) {
         self.path = path
     }
+}
 
-    // MARK: Methods
+// MARK: - Navigation Methods
 
+extension Router {
     /// Navigate to a new destination.
     /// - Parameter destination: The destination to be added to the path.
     public func navigate(to destination: any Hashable) {

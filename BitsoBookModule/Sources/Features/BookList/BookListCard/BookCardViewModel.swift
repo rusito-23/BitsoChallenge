@@ -2,17 +2,12 @@ import Foundation
 
 /// Models the view of the book list card.
 /// Does not support reactive behavior because its purpose is to update elements within a list.
-struct BookListCardViewModel {
-
-    // MARK: Properties
-
+struct BookCardViewModel {
     let id: String
     let name: String
     let maximumValue: String
     let minimumValue: String
     let maximumPrice: String
-
-    // MARK: Initializer
 
     init(
         name: String,

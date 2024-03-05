@@ -3,24 +3,17 @@ import BitsoKit
 import SwiftUI
 
 struct BookListView<ViewModel: BookListViewModel>: View {
-
-    // MARK: Properties
-
     @StateObject private var viewModel: ViewModel
-
-    // MARK: Initializer
 
     init(viewModel: ViewModel) {
         _viewModel = .init(wrappedValue: viewModel)
     }
 
-    // MARK: Body
-
     var body: some View {
         ZStack {
             switch viewModel.state {
             case .loading:
-                loadingView
+                ProgressView()
             case .empty:
                 emptyView
             case let .failed(error: error):
@@ -33,18 +26,16 @@ struct BookListView<ViewModel: BookListViewModel>: View {
             viewModel.loadBooks()
         }
     }
+}
 
-    // MARK: Private Views
+// MARK: - Private Views
 
-    private var loadingView: some View {
-        Text("Loading")
-    }
-
+extension BookListView {
     private var emptyView: some View {
         NoticeView(
             icon: .magnifyingGlass,
             title: Content.noticeTitle.localized,
-            subtitle: Content.emptyResultsMessage.localized
+            message: Content.emptyResultsMessage.localized
         )
     }
 
@@ -52,13 +43,13 @@ struct BookListView<ViewModel: BookListViewModel>: View {
         NoticeView(
             icon: .error,
             title: Content.noticeTitle.localized,
-            subtitle: Content.emptyResultsMessage.localized
+            message: Content.emptyResultsMessage.localized
         )
     }
 
-    private func booksListView(_ books: [BookListCardViewModel]) -> some View {
+    private func booksListView(_ books: [BookCardViewModel]) -> some View {
         List(books, id: \.id) { book in
-            BookListCard(viewModel: book)
+            BookCardView(viewModel: book)
                 .listRowInsets(EdgeInsets(spacing: .small))
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
@@ -103,13 +94,13 @@ struct BookListView_Previews: PreviewProvider {
                 .previewDisplayName("Empty")
 
             BookListView(viewModel: ViewModelMock(state: .loaded(books: [
-                BookListCardViewModel(
+                BookCardViewModel(
                     name: "Book 1",
                     maximumValue: "$ 150",
                     minimumValue: "$ 100",
                     maximumPrice: "$200"
                 ),
-                BookListCardViewModel(
+                BookCardViewModel(
                     name: "Book 2",
                     maximumValue: "$ 180",
                     minimumValue: "$ 120",

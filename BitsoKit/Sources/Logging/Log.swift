@@ -21,7 +21,11 @@ public struct Log {
         self.logger = logger
         self.dateProvider = dateProvider
     }
+}
 
+// MARK: - Log Methods
+
+extension Log {
     public func debug(
         _ object: Any,
         file: String = #file,

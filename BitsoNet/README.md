@@ -18,7 +18,7 @@ Provides an interface to perform network requests without having to interact dir
 
 Provides a collection of protocols that need to be used to perform requests:
 
-- [Domain](./Sources/Protocols/Domain.swift)
+- [APIEnvironment](./Sources/Protocols/APIEnvironment.swift)
 - [Endpoint](./Sources/Protocols/Endpoint.swift)
 - [Header](./Sources/Protocols/Header.swift)
 

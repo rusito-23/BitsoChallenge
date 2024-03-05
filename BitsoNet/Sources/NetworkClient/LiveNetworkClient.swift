@@ -5,29 +5,24 @@ import Foundation
 ///
 /// - Note: All payloads used in this client will be coded into/from JSON.
 public final class LiveNetworkClient {
-
-    // MARK: Private Properties
-
-    private let domain: DomainProvider
+    private let environment: APIEnvironment
     private let urlSession: URLSession
     private let encoder: JSONEncoder
     private let decoder: JSONDecoder
     private let defaultHeaders: [Header] = [HTTP.Headers.ContentType.json]
 
-    // MARK: Initializer
-
     /// Create a live RESTful network client.
-    /// - Parameter domain: The required domain for the network call.
+    /// - Parameter environment: The required environment for the network call.
     /// - Parameter urlSession: The URL session that will be used to perform the requests. Defaults to the shared instance.
     /// - Parameter encoder: The JSON encoder that will be used to encode the request payloads.
     /// - Parameter decoder: The JSON decoder that will be used to decode the response payloads.
     public init(
-        domain: DomainProvider,
+        environment: APIEnvironment,
         urlSession: URLSession = .shared,
         encoder: JSONEncoder = JSONEncoder(),
         decoder: JSONDecoder = JSONDecoder()
     ) {
-        self.domain = domain
+        self.environment = environment
         self.urlSession = urlSession
         self.encoder = encoder
         self.decoder = decoder
@@ -88,9 +83,10 @@ private extension LiveNetworkClient {
     /// Create the URL including the base URL, the path and the query parameters.
     func makeURL(from endpoint: Endpoint) -> URL? {
         var urlComponents = URLComponents()
-        urlComponents.scheme = domain.scheme
-        urlComponents.host = domain.host
-        urlComponents.path = [domain.path, endpoint.path].compactMap { $0 }.joined(separator: "/")
+        urlComponents.scheme = environment.scheme
+        urlComponents.host = environment.host
+        urlComponents.path = [environment.path, endpoint.path]
+            .compactMap { $0 }.joined(separator: "/")
         urlComponents.queryItems = endpoint.parameters
         return urlComponents.url
     }
@@ -122,10 +118,7 @@ private extension LiveNetworkClient {
         return request
     }
 
-    /// Parses the response model from the given request and return the unwrapped payload.
-    /// - Parameter data: The raw data given by the network call.
-    /// - Parameter request: The request that triggered the data.
-    /// - Returns: The result that determines whether the network call was successful, with its associated payload if needed.
+    /// Parses the response model from the given request to retrieve the unwrapped payload.
     func parse<ResponsePayload: Decodable>(
         _ data: Data,
         from request: URLRequest

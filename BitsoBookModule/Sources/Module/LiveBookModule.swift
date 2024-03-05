@@ -5,59 +5,54 @@ import Foundation
 
 /// The ``BookModule`` live implementation.
 public struct LiveBookModule: BookModule {
+    private let environment: APIEnvironment
 
-    // MARK: Properties
-
-    private let dependencies: Dependencies
-
-    // MARK: Public Initializer
-
-    /// Create a books module.
-    /// - Parameter dependencies: The dependencies needed to create a ``LiveBookModule``.
-    public init(dependencies: Dependencies) {
-        self.dependencies = dependencies
+    /// Create the book module.
+    /// - Parameter environment: The environment provider, required to perform service calls.
+    public init(environment: APIEnvironment) {
+        self.environment = environment
     }
+}
 
-    // MARK: Navigation
+// MARK: Navigation
 
-    /// Creates the view from the given destination, transformed as `AnyView`.
+extension LiveBookModule {
+    /// Creates the content for the given destination, transformed as `AnyView`.
     /// - Parameter destination: The ``BookDestination`` to be triggered.
-    /// -  Returns: The view to be navigated to.
+    /// -  Returns: The content to be navigated to.
     @MainActor
     public func navigation(to destination: BookDestination) -> AnyView {
-        navigationWrap(view(for: destination))
+        navigationWrap(coordinator(for: destination))
     }
 
     /// Creates the view from the given internal destination, transformed as `AnyView`.
     /// - Parameter destination: The `InternalBookDestination` to be triggered.
     /// -  Returns: The view to be navigated to.
     @MainActor
-    private func internalNavigation(for destination: BookInternalDestination) -> AnyView {
-        navigationWrap(internalView(for: destination))
+    func internalNavigation(for destination: BookInternalDestination) -> AnyView {
+        navigationWrap(internalCoordinator(for: destination))
     }
+}
 
-    // MARK: Private Methods
+// MARK: - Private Methods
 
-    /// Creates the view from the given public destination.
-    /// - Parameter destination: The ``BookDestination`` to be triggered.
-    /// -  Returns: The view to be navigated to.
+private extension LiveBookModule {
+    /// Create the coordinator for a public destination.
     @ViewBuilder
     @MainActor
-    private func view(for destination: BookDestination) -> some View {
+    private func coordinator(for destination: BookDestination) -> some View {
         switch destination {
-        case .bookList: BookListCoordinator(domain: dependencies.domain)
+        case .bookList: BookListCoordinator(environment: environment)
         }
     }
 
-    /// Creates the view from the given internal destination.
-    /// - Parameter destination: The `InternalBookDestination` to be triggered.
-    /// -  Returns: The view to be navigated to.
+    /// Create the coordinator for an internal destination.
     @ViewBuilder
     @MainActor
-    private func internalView(for destination: BookInternalDestination) -> some View {
+    private func internalCoordinator(for destination: BookInternalDestination) -> some View {
         switch destination {
         case let .bookDetails(id: bookID):
-            BookDetailsCoordinator(bookID: bookID, domain: dependencies.domain)
+            BookDetailsCoordinator(bookID: bookID, environment: environment)
         }
     }
 
@@ -69,18 +64,5 @@ public struct LiveBookModule: BookModule {
                 internalNavigation(for: $0)
             }
         )
-    }
-}
-
-// MARK: - Dependencies
-
-public extension LiveBookModule {
-    /// Describes the dependencies needed to create a ``LiveBookModule``.
-    struct Dependencies {
-        let domain: DomainProvider
-
-        public init(domain: DomainProvider) {
-            self.domain = domain
-        }
     }
 }

@@ -2,8 +2,7 @@ import Foundation
 
 // MARK: - Icon
 
-/// The available icons.
-/// These are all based on SF Symbols at the moment.
+/// The available icons, based on System SF Symbols.
 public enum Icon: String {
     case magnifyingGlass = "magnifyingglass"
     case error = "exclamationmark.triangle.fill"

@@ -4,34 +4,31 @@ import SwiftUI
 
 /// Displays a book card with its basic information.
 /// When tapped, will navigate to the book details.
-struct BookListCard: View {
-
-    // MARK: Properties
-
+struct BookCardView: View {
     @EnvironmentObject var router: Router
-    private let viewModel: BookListCardViewModel
+    private let viewModel: BookCardViewModel
 
-    // MARK: Initializer
-
-    init(viewModel: BookListCardViewModel) {
+    init(viewModel: BookCardViewModel) {
         self.viewModel = viewModel
     }
-
-    // MARK: Body
 
     var body: some View {
         Button {
             router.navigate(to: BookInternalDestination.bookDetails(id: viewModel.id))
         } label: {
-            CardContainer {
+            CardView {
                 content
             }
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
     }
+}
 
-    private var content: some View {
+// MARK: - Private Views
+
+private extension BookCardView {
+    var content: some View {
         HStack {
             Text(viewModel.name)
                 .font(.title3.bold())
@@ -43,7 +40,7 @@ struct BookListCard: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private var detailsStack: some View {
+    var detailsStack: some View {
         VStack(alignment: .trailing) {
             Text(viewModel.maximumPrice).font(.headline.bold())
             value(label: Content.minimum.localized, value: viewModel.minimumValue)
@@ -51,7 +48,7 @@ struct BookListCard: View {
         }
     }
 
-    private func value(label: String, value: String) -> some View {
+    func value(label: String, value: String) -> some View {
         HStack {
             Text(label).font(.callout.weight(.light))
             Text(value).font(.callout)
@@ -61,7 +58,7 @@ struct BookListCard: View {
 
 // MARK: - Content
 
-extension BookListCard {
+extension BookCardView {
     enum Content: String, LocalizableContent {
         case minimum = "MINIMUM"
         case maximum = "MAXIMUM"
@@ -78,7 +75,7 @@ extension BookListCard {
 struct BookListCard_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            BookListCard(viewModel: BookListCardViewModel(
+            BookCardView(viewModel: BookCardViewModel(
                 name: "Book Name",
                 maximumValue: "$ 150",
                 minimumValue: "$ 100",

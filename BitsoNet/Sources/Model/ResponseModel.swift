@@ -3,9 +3,8 @@ import Foundation
 /// A basic generic response model.
 /// This response represents the generic format that is expected from the service.
 ///
-/// When the response succeeded, `success` is expected to be `true` and the payload to be included.
-/// When the response fails, `success` is expected to be `false` and the payload is not included,
-/// instead there will be an error code and message.
+/// Instead of creating a plain struct with properties `success`, `payload` and `error`,
+/// we can use a generic enum that will clearly define one of the two cases (.success or .failure) when parsing.
 enum ResponseModel<Payload: Decodable>: Decodable {
     case success(Payload)
     case failure(message: String, code: Int)
