@@ -22,6 +22,7 @@ struct BookListView<ViewModel: BookListViewModeling>: View {
                 booksListView(books)
             }
         }
+        .navigationTitle(viewModel.title)
         .onAppear {
             viewModel.loadBooks()
         }
@@ -40,7 +41,6 @@ extension BookListView {
         }
         .scrollContentBackground(.hidden)
         .refreshable { viewModel.loadBooks() }
-        .padding(Spacing.small.rawValue)
     }
 }
 
@@ -50,6 +50,7 @@ extension BookListView {
 @available(*, unavailable)
 struct BookListView_Previews: PreviewProvider {
     final class ViewModelMock: BookListViewModeling {
+        var title: String = "All Books"
         var state: BookListState
         init(state: BookListState) { self.state = state }
         func loadBooks() -> Task<Void, Never> { Task {} }
@@ -62,12 +63,14 @@ struct BookListView_Previews: PreviewProvider {
 
             BookListView(viewModel: ViewModelMock(state: .loaded(books: [
                 BookCardViewModel(
+                    id: "1",
                     name: "Book 1",
                     maximumValue: "$ 150",
                     minimumValue: "$ 100",
                     maximumPrice: "$200"
                 ),
                 BookCardViewModel(
+                    id: "2",
                     name: "Book 2",
                     maximumValue: "$ 180",
                     minimumValue: "$ 120",

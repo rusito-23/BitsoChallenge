@@ -9,29 +9,21 @@ struct BookCardViewModel {
     let maximumValue: String
     let minimumValue: String
     let maximumPrice: String
-
     var minimumLabel: String { Content.minimum.localized }
     var maximumLabel: String { Content.maximum.localized }
 
     init(
+        id: String,
         name: String,
         maximumValue: String,
         minimumValue: String,
         maximumPrice: String
     ) {
-        self.id = name
+        self.id = id
         self.name = name
         self.maximumValue = maximumValue
         self.minimumValue = minimumValue
         self.maximumPrice = maximumPrice
-    }
-
-    init(from book: Book) {
-        self.id = book.name
-        self.name = book.name.uppercased().split(separator: "_").joined(separator: " ")
-        self.maximumValue = book.maximumValue
-        self.minimumValue = book.minimumValue
-        self.maximumPrice = book.maximumPrice
     }
 }
 

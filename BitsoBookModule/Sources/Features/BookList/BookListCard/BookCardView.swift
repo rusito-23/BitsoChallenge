@@ -63,10 +63,11 @@ struct BookCardView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             BookCardView(viewModel: BookCardViewModel(
+                id: "book_id",
                 name: "Book Name",
                 maximumValue: "$ 150",
                 minimumValue: "$ 100",
-                maximumPrice: "$200"
+                maximumPrice: "$ 200"
             ))
         }
     }

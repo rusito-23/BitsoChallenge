@@ -2,7 +2,7 @@
 // MARK: - Common
 
 "OOPS" = "Oops!";
-"GENERIC_ERROR_MESSAGE" = "Something went wrong.";
+"GENERAL_ERROR_MESSAGE" = "Something went wrong.";
 "EMPTY_RESULT_MESSAGE" = "We couldn't find anything";
 
 // MARK: - Book
@@ -15,4 +15,6 @@
 "ASK_LABEL" = "Ask";
 "BID_LABEL" = "Bid";
 
+// MARK: - Book List
 
+"BOOK_LIST_TITLE" = "All Books";

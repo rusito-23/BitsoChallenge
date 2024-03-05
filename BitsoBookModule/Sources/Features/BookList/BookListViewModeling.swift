@@ -14,6 +14,9 @@ enum BookListState {
 
 @MainActor
 protocol BookListViewModeling: ObservableObject {
+    /// The navigation title of the view.
+    var title: String { get }
+
     /// The current state of the view.
     var state: BookListState { get }
 
@@ -26,8 +29,10 @@ protocol BookListViewModeling: ObservableObject {
 // MARK: - View Model
 
 @MainActor
-final class BookListViewModel: BookListViewModeling {
-    @Published var state: BookListState = .loading
+final class BookListViewModel: BaseBookViewModel, BookListViewModeling {
+    @Published private(set) var title: String = Content.title.localized
+    @Published private(set) var state: BookListState = .loading
+
     private let service: any BookService
 
     init(service: BookService) {
@@ -57,7 +62,15 @@ final class BookListViewModel: BookListViewModeling {
                 state = .failed(notice: notice)
 
             case let .success(books):
-                let books = books.map { BookCardViewModel(from: $0) }
+                let books = books.map { book in
+                    BookCardViewModel(
+                        id: book.name,
+                        name: displayName(from: book.name),
+                        maximumValue: currencyFormat(value: book.maximumValue),
+                        minimumValue: currencyFormat(value: book.minimumValue),
+                        maximumPrice: currencyFormat(value: book.maximumPrice)
+                    )
+                }
                 state = .loaded(books: books)
             }
         }
@@ -68,6 +81,7 @@ final class BookListViewModel: BookListViewModeling {
 
 private extension BookListViewModel {
     enum Content: String, LocalizableContent {
+        case title = "BOOK_LIST_TITLE"
         case noticeTitle = "OOPS"
         case emptyResultsMessage = "EMPTY_RESULT_MESSAGE"
         case generalErrorMessage = "GENERAL_ERROR_MESSAGE"

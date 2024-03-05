@@ -31,10 +31,10 @@ protocol BookDetailsViewModeling: ObservableObject {
     func load() -> Task<Void, Never>
 }
 
-// MARK: - Live
+// MARK: - View Model
 
 @MainActor
-final class BookDetailsViewModel: BookDetailsViewModeling {
+final class BookDetailsViewModel: BaseBookViewModel, BookDetailsViewModeling {
     @Published private(set) var title: String?
     @Published private(set) var state: BookDetailsViewState = .loading
 
@@ -53,16 +53,21 @@ final class BookDetailsViewModel: BookDetailsViewModeling {
             switch result {
 
             case let .success(details):
-                title = details.name
+                title = displayName(from: details.name)
                 state = .loaded(sections: [
                     .init(items: [
-                        (label: Content.volume.localized, value: details.volume),
-                        (label: Content.high.localized, value: details.high),
-                        (label: Content.bid.localized, value: details.bid),
+                        (label: Content.volume.localized,
+                         value: currencyFormat(value: details.volume)),
+                        (label: Content.high.localized,
+                         value: currencyFormat(value: details.high)),
+                        (label: Content.bid.localized,
+                         value: currencyFormat(value: details.bid)),
                     ]),
                     .init(items: [
-                        (label: Content.ask.localized, value: details.ask),
-                        (label: Content.bid.localized, value: details.bid),
+                        (label: Content.ask.localized,
+                         value: currencyFormat(value: details.ask)),
+                        (label: Content.bid.localized,
+                         value: currencyFormat(value: details.bid)),
                     ]),
                 ])
 
