@@ -16,4 +16,10 @@
    <FileRef
       location = "group:BitsoShell/BitsoShell.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:BitsoShellTests.xctestplan">
+   </FileRef>
+   <FileRef
+      location = "group:BitsoShellSnapshots.xctestplan">
+   </FileRef>
 </Workspace>

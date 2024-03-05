@@ -1,0 +1,49 @@
+{
+  "configurations" : [
+    {
+      "id" : "C9DB2356-367F-48F3-8510-B6C5B317CFD5",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:BitsoShell.xcodeproj",
+      "identifier" : "781EC20F2B8E37ED004A0757",
+      "name" : "BitsoShell"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:..\/BitsoUI",
+        "identifier" : "BitsoUITests",
+        "name" : "BitsoUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/BitsoNet",
+        "identifier" : "BitsoNetTests",
+        "name" : "BitsoNetTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/BitsoKit",
+        "identifier" : "BitsoKitTests",
+        "name" : "BitsoKitTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/BitsoBookModule",
+        "identifier" : "BitsoBookModuleTests",
+        "name" : "BitsoBookModuleTests"
+      }
+    }
+  ],
+  "version" : 1
+}

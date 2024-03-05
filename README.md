@@ -9,9 +9,10 @@
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
-2. [Architecture](#architecture)
+2. [Dependencies](#dependencies)
 3. [Modules](#modules)
-4. [Testing](#testing)
+4. [Patterns](#patterns)
+5. [Testing](#testing)
 
 ## Getting Started
 
@@ -30,6 +31,18 @@ Once we open Xcode, all packages will be resolved automatically.
 The only 3rd party dependency used in this project is [pointfreeco/swift-snapshot-testing](https://github.com/pointfreeco/swift-snapshot-testing).
 This dependency is used to perform snapshot comparison tests.
 
+## Modules
+
+The workspace contains different modules:
+
+- [BitsoShell](./BitsoShell): is the main app shell.
+- [BitsoUI](./BitsoUI): mini Design System
+- [BitsoNet](./BitsoNet): utils to perform network calls
+- [BitsoKit](./BitsoKit): general utils to be used across all modules
+- [BitsoBookModule](./BitsoBookModule): the module that provides features related to books
+
+Each of these modules are Local Swift Packages.
+
 ## Patterns
 
 Across this app, we will use:
@@ -39,26 +52,38 @@ Across this app, we will use:
 - **Async/Await** patterns to perform background tasks
 - **Router** pattern to manage navigation between SwiftUI views
 
-## Modules
-
-The workspace contains different modules:
-
-- [BitsoShell](./BitsoShell): is the main app shell.
-- [BitsoUI](./BitsoUI): mini Design System
-- [BitsoNet](./BitsoNet): utils to perform network calls
-- [BitsoKit](./BitsoKit): general utils to be used across all modules
-- [BitsoBookModule](./BitsoBookModule): the
-
-Each of these modules are Local Swift Packages.
-
 ## Testing
 
 This project uses two different testing approaches:
 
-- Unit Tests: Tests each logic component separately
-- Snapshot Tests: Tests view components by comparing them with a pre-recorded baseline
+- **Unit Tests**: Tests each logic component separately
+- **Snapshot Tests**: Tests view components by comparing them with a pre-recorded baseline
 
-TBD: Test Plans!
+Each module can be tested independently using its own scheme:
+
+- Select the module scheme: `Xcode -> Product -> Scheme -> {module scheme}` (e.g. `BitsoNet`)
+- Run tests: `Xcode -> Product -> Test`
+
+And the modules that support Snapshot testing will provide a separate scheme:
+
+- Select the snapshot scheme: `Xcode -> Product -> Scheme -> {snaphot tests scheme}` (e.g. `BitsoUISnapshotTests`)
+- Run tests: `Xcode -> Product -> Test`
+
+> :exclamation: Snapshots need to run using an **iPhone 14 Pro** with **iOS 16.2** simulator.
+
+> :grey_exclamation: To _record_ the snapshot tests, the environment configuration `RECORD_SNAPSHOTS` needs to be set to `true`.
+
+## Test Plans
+
+The workspace also contains two test-plans that run all tests for all modules:
+
+- [Unit Test Plan](./BitsoShellTests.xctestplan)
+- [Snapshots Test Plan](./BitsoShellSnapshots.xctestplan)
+
+These can be run:
+
+- Select the test plan: `Xcode -> Product -> Scheme -> {test plan}`
+- Run tests: `Xcode -> Product -> Test`
 
 <!-- Badge Links -->
 
