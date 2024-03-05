@@ -1,9 +1,19 @@
 # BitsoUI
 
-A collection of UI utils to be used across all Bitso App modules to keep a consistent user experience and code style.
+A mini Design System to be used across all modules in the app.
 
-## Structure
+## Component
 
-- [Components](./Components): provides different UI components to be reused.
-- [Constants](./Constants): provides different constants like dimensions, color, etc.
-- [Modifiers](./Modifiers): provides common useful view modifiers.
+Provides basic reusable components:
+
+- [NoticeView](./Sources/Component/Notice) displays a notice with a title and a message.
+- [CardView](./Sources/Component/CardView.swift) wraps other content into a card-like view
+- [IconView](./Sources/Component/IconView.swift) displays a system icon
+
+## Constants
+
+Provides several constants to avoid using literal values:
+
+- [Border](./Sources/Constants/Border.swift) constants to manage the borders of a view
+- [Icon](./Sources/Constants/Icon.swift) constants to create and resize icons
+- [Spacing](./Sources/Constants/Spacing) provides basic spacing values and utils to allows views to interact with them

@@ -1,6 +1,6 @@
 # BitsoNet
 
-A collection of utils to interact with a network service.
+A collection of utils to interact with network.
 
 ## `NetworkClient`
 
@@ -18,14 +18,12 @@ Provides an interface to perform network requests without having to interact dir
 
 Provides a collection of protocols that need to be used to perform requests:
 
-- [APIEnvironment](./Sources/Protocols/APIEnvironment.swift)
-- [Endpoint](./Sources/Protocols/Endpoint.swift)
-- [Header](./Sources/Protocols/Header.swift)
+- [APIEnvironment](./Sources/Protocols/APIEnvironment.swift): Defines a the base environment to perform a request.
+- [Endpoint](./Sources/Protocols/Endpoint.swift): Defines an endpoint.
 
-## Constants and utils
+## Constants and models
 
 Provides a set of constants and utils to prevent using literals when interacting with the module:
 
-- [Empty](./Sources/Constants/Empty.swift)
 - [HTTP](./Sources/Constants/HTTP.swift)
 - [NetworkError](./Sources/Constants/NetworkError.swift)

@@ -23,13 +23,13 @@ The local dev environment can be set up using the [Tools/setup](./Tools/setup) s
 - will bootstrap all Mint dependencies
 - set up the [PreCommit Script](./Tools/pre-commit)
 
-This project does not use any third party dependency.
+Once we open Xcode, all packages will be resolved automatically.
 
-## Architecture
+## Patterns
 
 Across this app, we will use:
 
-- **MVVM** architectural pattern
+- **MVVM-C** (Model-View-ViewModel-Coordinator) architectural pattern
 - **Dependency Injection** through initializer
 - **Async/Await** patterns to perform background tasks
 
@@ -38,9 +38,10 @@ Across this app, we will use:
 The workspace contains different modules:
 
 - [BitsoShell](./BitsoShell): is the main app shell.
-- [BitsoUI](./BitsoUI): provides UI components to keep a consistent style.
-- [BitsoNet](./BitsoNet): provides a generic network layer.
-- [Features](./Features): contains the feature modules.
+- [BitsoUI](./BitsoUI): mini Design System
+- [BitsoNet](./BitsoNet): utils to perform network calls
+- [BitsoKit](./BitsoKit): general utils to be used across all modules
+- [BitsoBookModule](./BitsoBookModule): the
 
 Each of these modules are Local Swift Packages.
 
