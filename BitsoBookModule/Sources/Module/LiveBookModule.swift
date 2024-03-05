@@ -29,18 +29,18 @@ extension LiveBookModule {
     /// - Parameter destination: The `InternalBookDestination` to be triggered.
     /// -  Returns: The view to be navigated to.
     @MainActor
-    func internalNavigation(for destination: BookInternalDestination) -> AnyView {
+    func internalNavigation(to destination: BookInternalDestination) -> AnyView {
         navigationWrap(internalCoordinator(for: destination))
     }
 }
 
 // MARK: - Private Methods
 
-private extension LiveBookModule {
+extension LiveBookModule {
     /// Create the coordinator for a public destination.
     @ViewBuilder
     @MainActor
-    private func coordinator(for destination: BookDestination) -> some View {
+    func coordinator(for destination: BookDestination) -> some View {
         switch destination {
         case .bookList: BookListCoordinator(environment: environment)
         }
@@ -49,7 +49,7 @@ private extension LiveBookModule {
     /// Create the coordinator for an internal destination.
     @ViewBuilder
     @MainActor
-    private func internalCoordinator(for destination: BookInternalDestination) -> some View {
+    func internalCoordinator(for destination: BookInternalDestination) -> some View {
         switch destination {
         case let .bookDetails(id: bookID):
             BookDetailsCoordinator(bookID: bookID, environment: environment)
@@ -61,7 +61,7 @@ private extension LiveBookModule {
     private func navigationWrap(_ view: any View) -> AnyView {
         AnyView(
             view.navigationDestination(for: BookInternalDestination.self) {
-                internalNavigation(for: $0)
+                internalNavigation(to: $0)
             }
         )
     }
