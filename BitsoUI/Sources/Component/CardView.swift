@@ -42,7 +42,7 @@ public struct CardView<Content: View>: View {
 
 #if DEBUG
 @available(*, unavailable)
-struct CardContainer_Previews: PreviewProvider {
+struct CardView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             CardView {

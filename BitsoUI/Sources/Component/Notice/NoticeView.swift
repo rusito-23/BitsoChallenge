@@ -1,32 +1,25 @@
 import SwiftUI
 
-/// Displays a generic notice that includes a title, an icon and a message.
+/// Displays a generic notice that includes a title, an icon and an optional message.
 public struct NoticeView: View {
-    private let icon: Icon
-    private let title: String
-    private let message: String
-    private let iconSize: IconSize = .medium
+    private let viewModel: NoticeViewModel
 
     /// Create a notice view.
-    /// - Parameter icon: The icon to be displayed at the center.
-    /// - Parameter title: The title of the notice.
-    /// - Parameter message: The notice message.
-    public init(icon: Icon, title: String, message: String) {
-        self.icon = icon
-        self.title = title
-        self.message = message
+    /// - Parameter viewModel: The ``NoticeViewModel`` to model the view.
+    public init(viewModel: NoticeViewModel) {
+        self.viewModel = viewModel
     }
 
     public var body: some View {
         VStack(alignment: .center, spacing: Spacing.medium.rawValue) {
-            Text(title)
+            Text(viewModel.title)
                 .font(.title)
 
-            Image(systemName: icon.rawValue)
+            Image(systemName: viewModel.icon.rawValue)
                 .resizable()
-                .frame(width: iconSize.rawValue, height: iconSize.rawValue)
+                .frame(width: viewModel.iconSize.rawValue, height: viewModel.iconSize.rawValue)
 
-            Text(message)
+            Text(viewModel.message)
                 .font(.title2)
         }
     }
@@ -39,18 +32,18 @@ public struct NoticeView: View {
 struct NoticeView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            NoticeView(
+            NoticeView(viewModel: .init(
                 icon: .magnifyingGlass,
                 title: "No results",
                 message: "We got not results!"
-            )
+            ))
             .previewDisplayName("No results")
 
-            NoticeView(
+            NoticeView(viewModel: .init(
                 icon: .error,
                 title: "Error",
                 message: "Something went wrong!"
-            )
+            ))
             .previewDisplayName("Error")
         }
     }

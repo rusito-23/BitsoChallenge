@@ -1,3 +1,4 @@
+import BitsoKit
 import Foundation
 
 /// Models the view of the book list card.
@@ -8,6 +9,9 @@ struct BookCardViewModel {
     let maximumValue: String
     let minimumValue: String
     let maximumPrice: String
+
+    var minimumLabel: String { Content.minimum.localized }
+    var maximumLabel: String { Content.maximum.localized }
 
     init(
         name: String,
@@ -28,5 +32,18 @@ struct BookCardViewModel {
         self.maximumValue = book.maximumValue
         self.minimumValue = book.minimumValue
         self.maximumPrice = book.maximumPrice
+    }
+}
+
+// MARK: - Localizable Content
+
+extension BookCardViewModel {
+    enum Content: String, LocalizableContent {
+        case minimum = "MINIMUM_VALUE_LABEL"
+        case maximum = "MAXIMUM_VALUE_LABEL"
+
+        var localized: String {
+            localize(bundle: .module)
+        }
     }
 }

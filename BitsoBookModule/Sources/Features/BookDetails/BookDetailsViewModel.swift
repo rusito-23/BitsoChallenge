@@ -1,4 +1,5 @@
 import BitsoKit
+import BitsoUI
 import Foundation
 
 // MARK: - State
@@ -6,11 +7,11 @@ import Foundation
 enum BookDetailsViewState {
     case loading
     case loaded(sections: [Section])
-    case failed(error: BookServiceError)
+    case failed(notice: NoticeViewModel)
 
-    enum Section: Hashable {
-        case history(volume: String, high: String, change: String)
-        case bid(ask: String, bid: String)
+    struct Section: Identifiable {
+        let id = UUID()
+        let items: [(label: String, value: String)]
     }
 }
 
@@ -34,47 +35,64 @@ protocol BookDetailsViewModel: ObservableObject {
 
 @MainActor
 final class LiveBookDetailsViewModel: BookDetailsViewModel {
-
-    // MARK: Published Properties
-
     @Published private(set) var title: String?
     @Published private(set) var state: BookDetailsViewState = .loading
 
-    // MARK: Private Properties
-
     private let bookID: String
     private let service: BookService
-
-    // MARK: Initializer
 
     init(bookID: String, service: BookService) {
         self.bookID = bookID
         self.service = service
     }
 
-    // MARK: View Model Conformance
-
     @discardableResult
     func load() -> Task<Void, Never> {
         Task {
             let result = await service.fetchDetails(with: bookID)
             switch result {
+
             case let .success(details):
                 title = details.name
                 state = .loaded(sections: [
-                    .history(
-                        volume: details.volume,
-                        high: details.high,
-                        change: details.change
-                    ),
-                    .bid(
-                        ask: details.ask,
-                        bid: details.bid
-                    ),
+                    .init(items: [
+                        (label: Content.volume.localized, value: details.volume),
+                        (label: Content.high.localized, value: details.high),
+                        (label: Content.bid.localized, value: details.bid),
+                    ]),
+                    .init(items: [
+                        (label: Content.ask.localized, value: details.ask),
+                        (label: Content.bid.localized, value: details.bid),
+                    ]),
                 ])
-            case let .failure(error):
-                state = .failed(error: error)
+
+            case .failure:
+                let notice = NoticeViewModel(
+                    icon: .error,
+                    title: Content.noticeTitle.localized,
+                    message: Content.generalErrorMessage.localized
+                )
+                state = .failed(notice: notice)
             }
+        }
+    }
+}
+
+// MARK: - Localizable Content
+
+private extension LiveBookDetailsViewModel {
+    enum Content: String, LocalizableContent {
+        case noticeTitle = "OOPS"
+        case generalErrorMessage = "GENERAL_ERROR_MESSAGE"
+
+        case volume = "VOLUME_LABEL"
+        case high = "HIGH_LABEL"
+        case change = "CHANGE_LABEL"
+        case ask = "ASK_LABEL"
+        case bid = "BID_LABEL"
+
+        var localized: String {
+            localize(bundle: .module)
         }
     }
 }

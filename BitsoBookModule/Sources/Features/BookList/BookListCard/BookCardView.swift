@@ -43,8 +43,8 @@ private extension BookCardView {
     var detailsStack: some View {
         VStack(alignment: .trailing) {
             Text(viewModel.maximumPrice).font(.headline.bold())
-            value(label: Content.minimum.localized, value: viewModel.minimumValue)
-            value(label: Content.maximum.localized, value: viewModel.maximumValue)
+            value(label: viewModel.minimumLabel, value: viewModel.minimumValue)
+            value(label: viewModel.maximumLabel, value: viewModel.maximumValue)
         }
     }
 
@@ -56,23 +56,10 @@ private extension BookCardView {
     }
 }
 
-// MARK: - Content
-
-extension BookCardView {
-    enum Content: String, LocalizableContent {
-        case minimum = "MINIMUM"
-        case maximum = "MAXIMUM"
-
-        var localized: String {
-            localize(bundle: .module)
-        }
-    }
-}
-
 // MARK: - Previews
 
 #if DEBUG
-struct BookListCard_Previews: PreviewProvider {
+struct BookCardView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             BookCardView(viewModel: BookCardViewModel(

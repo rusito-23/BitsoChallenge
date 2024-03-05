@@ -3,13 +3,16 @@
 
 "OOPS" = "Oops!";
 "GENERIC_ERROR_MESSAGE" = "Something went wrong.";
+"EMPTY_RESULT_MESSAGE" = "We couldn't find anything";
 
-// MARK: - Book List
+// MARK: - Book
 
-"BOOK_LIST_EMPTY_RESULT_MESSAGE" = "We could not find any books.";
+"MINIMUM_VALUE_LABEL" = "Min.";
+"MAXIMUM_VALUE_LABEL" = "Min.";
+"VOLUME_LABEL" = "Volume";
+"HIGH_LABEL" = "High";
+"CHANGE_LABEL" = "Change";
+"ASK_LABEL" = "Ask";
+"BID_LABEL" = "Bid";
 
-// MARK: - Book Card
-
-"MINIMUM" = "Min.";
-"MAXIMUM" = "Min.";
 

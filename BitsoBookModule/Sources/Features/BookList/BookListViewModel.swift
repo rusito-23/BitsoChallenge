@@ -1,12 +1,13 @@
+import BitsoKit
+import BitsoUI
 import Foundation
 
 // MARK: - State
 
 enum BookListState {
     case loading
-    case empty
     case loaded(books: [BookCardViewModel])
-    case failed(error: BookServiceError)
+    case failed(notice: NoticeViewModel)
 }
 
 // MARK: - Protocol
@@ -26,36 +27,53 @@ protocol BookListViewModel: ObservableObject {
 
 @MainActor
 final class LiveBookListViewModel: BookListViewModel {
-
-    // MARK: Published Properties
-
     @Published var state: BookListState = .loading
-
-    // MARK: Private Properties
-
     private let service: any BookService
-
-    // MARK: Initializers
 
     init(service: BookService) {
         self.service = service
     }
 
-    // MARK: View Model Conformance
-
     @discardableResult
     func loadBooks() -> Task<Void, Never> {
         Task {
             let result = await service.fetchAll()
+
             switch result {
+            case .failure:
+                let notice = NoticeViewModel(
+                    icon: .magnifyingGlass,
+                    title: Content.noticeTitle.localized,
+                    message: Content.generalErrorMessage.localized
+                )
+                state = .failed(notice: notice)
+
             case let .success(books) where books.isEmpty:
-                state = .empty
+                let notice = NoticeViewModel(
+                    icon: .magnifyingGlass,
+                    title: Content.noticeTitle.localized,
+                    message: Content.emptyResultsMessage.localized
+                )
+                state = .failed(notice: notice)
+
             case let .success(books):
                 let books = books.map { BookCardViewModel(from: $0) }
                 state = .loaded(books: books)
-            case let .failure(failure):
-                state = .failed(error: failure)
             }
+        }
+    }
+}
+
+// MARK: - Localizable Content
+
+private extension LiveBookListViewModel {
+    enum Content: String, LocalizableContent {
+        case noticeTitle = "OOPS"
+        case emptyResultsMessage = "EMPTY_RESULT_MESSAGE"
+        case generalErrorMessage = "GENERAL_ERROR_MESSAGE"
+
+        var localized: String {
+            localize(bundle: .module)
         }
     }
 }

@@ -24,28 +24,12 @@ final class LiveBookService {
 // MARK: - Service Conformance
 
 extension LiveBookService: BookService {
-    func fetchAll() async -> Result<[Book], BookServiceError> {
-        let endpoint = Endpoint.booksList
-        let result: Result<[Book], NetworkError> = await client.perform(endpoint)
-
-        switch result {
-        case let .success(books):
-            return .success(books)
-        case .failure:
-            return .failure(.network)
-        }
+    func fetchAll() async -> Result<[Book], NetworkError> {
+        await client.perform(Endpoint.booksList)
     }
 
-    func fetchDetails(with bookID: String) async -> Result<BookDetails, BookServiceError> {
-        let endpoint = Endpoint.bookDetails(id: bookID)
-        let result: Result<BookDetails, NetworkError> = await client.perform(endpoint)
-
-        switch result {
-        case let .success(bookDetails):
-            return .success(bookDetails)
-        case .failure:
-            return .failure(.network)
-        }
+    func fetchDetails(with bookID: String) async -> Result<BookDetails, NetworkError> {
+        await client.perform(Endpoint.bookDetails(id: bookID))
     }
 }
 

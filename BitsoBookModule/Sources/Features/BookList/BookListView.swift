@@ -14,10 +14,10 @@ struct BookListView<ViewModel: BookListViewModel>: View {
             switch viewModel.state {
             case .loading:
                 ProgressView()
-            case .empty:
-                emptyView
-            case let .failed(error: error):
-                errorView(error)
+
+            case let .failed(notice: noticeViewModel):
+                NoticeView(viewModel: noticeViewModel)
+
             case let .loaded(books: books):
                 booksListView(books)
             }
@@ -31,23 +31,7 @@ struct BookListView<ViewModel: BookListViewModel>: View {
 // MARK: - Private Views
 
 extension BookListView {
-    private var emptyView: some View {
-        NoticeView(
-            icon: .magnifyingGlass,
-            title: Content.noticeTitle.localized,
-            message: Content.emptyResultsMessage.localized
-        )
-    }
-
-    private func errorView(_ error: BookServiceError) -> some View {
-        NoticeView(
-            icon: .error,
-            title: Content.noticeTitle.localized,
-            message: Content.emptyResultsMessage.localized
-        )
-    }
-
-    private func booksListView(_ books: [BookCardViewModel]) -> some View {
+    func booksListView(_ books: [BookCardViewModel]) -> some View {
         List(books, id: \.id) { book in
             BookCardView(viewModel: book)
                 .listRowInsets(EdgeInsets(spacing: .small))
@@ -57,20 +41,6 @@ extension BookListView {
         .scrollContentBackground(.hidden)
         .refreshable { viewModel.loadBooks() }
         .padding(Spacing.small.rawValue)
-    }
-}
-
-// MARK: - Content
-
-private extension BookListView {
-    enum Content: String, LocalizableContent {
-        case noticeTitle = "OOPS"
-        case emptyResultsMessage = "BOOK_LIST_EMPTY_RESULT_MESSAGE"
-        case errorMessage = "GENERAL_ERROR_MESSAGE"
-
-        var localized: String {
-            localize(bundle: .module)
-        }
     }
 }
 
@@ -90,9 +60,6 @@ struct BookListView_Previews: PreviewProvider {
             BookListView(viewModel: ViewModelMock(state: .loading))
                 .previewDisplayName("Loading")
 
-            BookListView(viewModel: ViewModelMock(state: .empty))
-                .previewDisplayName("Empty")
-
             BookListView(viewModel: ViewModelMock(state: .loaded(books: [
                 BookCardViewModel(
                     name: "Book 1",
@@ -109,8 +76,12 @@ struct BookListView_Previews: PreviewProvider {
             ])))
             .previewDisplayName("Loaded")
 
-            BookListView(viewModel: ViewModelMock(state: .failed(error: .network)))
-                .previewDisplayName("Failed")
+            BookListView(viewModel: ViewModelMock(state: .failed(notice: NoticeViewModel(
+                icon: .error,
+                title: "Oops!",
+                message: "Something went wrong."
+            ))))
+            .previewDisplayName("Failed")
         }
     }
 }

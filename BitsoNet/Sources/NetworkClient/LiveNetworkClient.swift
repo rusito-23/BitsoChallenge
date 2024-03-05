@@ -38,7 +38,7 @@ extension LiveNetworkClient: NetworkClient {
 
         // Build the request for the service call.
         guard let request = makeRequest(from: endpoint) else {
-            log.error("Request creation for \(endpoint.method) \(endpoint.path) failed.")
+            log.error("REQ creation for \(endpoint.method) \(endpoint.path) failed.")
             return .failure(.invalidRequest)
         }
 
@@ -55,22 +55,22 @@ extension LiveNetworkClient: NetworkClient {
         let status = HTTP.Status(response.statusCode)
         switch status {
         case .client:
-            log.error("Request: \(request) failed with error: .invalidRequest")
+            log.error("REQ: \(request) failed with error: .invalidRequest")
             return .failure(.invalidRequest)
 
         case .server:
-            log.error("Request: \(request) failed with service internal error.")
+            log.error("REQ: \(request) failed with service internal error.")
             return .failure(.serviceError(code: response.statusCode))
 
         case .info, .redirect, .unknown:
-            log.error("Request: \(request) failed for unhandled status: \(status)")
+            log.error("REQ: \(request) failed for unhandled status: \(status)")
             return .failure(.unknown)
 
         case .success:
             do {
                 return try parse(data, from: request)
             } catch let error {
-                log.error("Request: \(request) failed to decode response with error \(error)")
+                log.error("REQ: \(request) failed to decode response with error \(error)")
                 return .failure(.invalidResponse)
             }
         }
