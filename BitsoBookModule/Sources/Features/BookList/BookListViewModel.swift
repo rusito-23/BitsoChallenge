@@ -53,7 +53,7 @@ final class BookListViewModel: BaseBookViewModel, BookListViewModeling {
             // The operation needs to run in the main thread to ensure
             // the view model properties are available to be updated.
             Task { @MainActor [weak self] in
-                log.info("Reload timer triggered on state: \(String(describing: self?.state))")
+                log.info("Reload timer triggered")
                 guard let self, case .loaded = self.state else { return }
                 self.loadBooks()
             }

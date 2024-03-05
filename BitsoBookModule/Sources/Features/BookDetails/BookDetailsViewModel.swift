@@ -6,7 +6,7 @@ import Foundation
 
 enum BookDetailsViewState {
     case loading
-    case loaded(sections: [Section])
+    case loaded(title: String, sections: [Section])
     case failed(notice: NoticeViewModel)
 
     struct Section: Identifiable {
@@ -19,9 +19,6 @@ enum BookDetailsViewState {
 
 @MainActor
 protocol BookDetailsViewModeling: ObservableObject {
-    /// The title of the view. Updates to display the name of the book once loaded.
-    var title: String? { get }
-
     /// The current state of the view.
     var state: BookDetailsViewState { get }
 
@@ -35,7 +32,6 @@ protocol BookDetailsViewModeling: ObservableObject {
 
 @MainActor
 final class BookDetailsViewModel: BaseBookViewModel, BookDetailsViewModeling {
-    @Published private(set) var title: String?
     @Published private(set) var state: BookDetailsViewState = .loading
 
     private let bookID: String
@@ -54,23 +50,25 @@ final class BookDetailsViewModel: BaseBookViewModel, BookDetailsViewModeling {
             switch result {
 
             case let .success(details):
-                title = displayName(from: details.name)
-                state = .loaded(sections: [
-                    .init(items: [
-                        (label: Content.volume.localized,
-                         value: currencyFormat(value: details.volume)),
-                        (label: Content.high.localized,
-                         value: currencyFormat(value: details.high)),
-                        (label: Content.bid.localized,
-                         value: currencyFormat(value: details.bid)),
-                    ]),
-                    .init(items: [
-                        (label: Content.ask.localized,
-                         value: currencyFormat(value: details.ask)),
-                        (label: Content.bid.localized,
-                         value: currencyFormat(value: details.bid)),
-                    ]),
-                ])
+                state = .loaded(
+                    title: displayName(from: details.name),
+                    sections: [
+                        .init(items: [
+                            (label: Content.volume.localized,
+                             value: currencyFormat(value: details.volume)),
+                            (label: Content.high.localized,
+                             value: currencyFormat(value: details.high)),
+                            (label: Content.bid.localized,
+                             value: currencyFormat(value: details.bid)),
+                        ]),
+                        .init(items: [
+                            (label: Content.ask.localized,
+                             value: currencyFormat(value: details.ask)),
+                            (label: Content.bid.localized,
+                             value: currencyFormat(value: details.bid)),
+                        ]),
+                    ]
+                )
 
             case .failure:
                 let notice = NoticeViewModel(

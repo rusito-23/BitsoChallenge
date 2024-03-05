@@ -17,11 +17,12 @@ struct BookDetailsView<ViewModel: BookDetailsViewModeling>: View {
             case let .failed(notice: noticeViewModel):
                 NoticeView(viewModel: noticeViewModel)
 
-            case let .loaded(sections):
-                contentView(sections)
+            case let .loaded(title, sections):
+                contentView(title, sections)
             }
         }
-        .padding(Spacing.medium.rawValue)
+        .padding(.leading, Spacing.medium.rawValue)
+        .padding(.trailing, Spacing.medium.rawValue)
         .onAppear {
             viewModel.load()
         }
@@ -31,9 +32,9 @@ struct BookDetailsView<ViewModel: BookDetailsViewModeling>: View {
 // MARK: - Private Views
 
 private extension BookDetailsView {
-    func contentView(_ sections: [BookDetailsViewState.Section]) -> some View {
+    func contentView(_ title: String, _ sections: [BookDetailsViewState.Section]) -> some View {
         VStack(spacing: Spacing.medium.rawValue) {
-            Text(viewModel.title ?? "")
+            Text(title)
                 .font(.largeTitle)
 
             ForEach(sections) { section in
@@ -65,7 +66,6 @@ private extension BookDetailsView {
 #if DEBUG
 struct BookDetailsView_Previews: PreviewProvider {
     final class ViewModelMock: BookDetailsViewModeling {
-        var title: String? = "BTC MXN"
         var state: BookDetailsViewState = .loading
         init(state: BookDetailsViewState) { self.state = state }
         func load() -> Task<Void, Never> { Task {} }
@@ -74,17 +74,20 @@ struct BookDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             BookDetailsView(
-                viewModel: ViewModelMock(state: .loaded(sections: [
-                    .init(items: [
-                        (label: "volume", value: "1000"),
-                        (label: "high", value: "1000"),
-                        (label: "bid", value: "1000"),
-                    ]),
-                    .init(items: [
-                        (label: "ask", value: "1200"),
-                        (label: "bid", value: "1200"),
-                    ]),
-                ]))
+                viewModel: ViewModelMock(state: .loaded(
+                    title: "BTC MXN",
+                    sections: [
+                        .init(items: [
+                            (label: "volume", value: "1000"),
+                            (label: "high", value: "1000"),
+                            (label: "bid", value: "1000"),
+                        ]),
+                        .init(items: [
+                            (label: "ask", value: "1200"),
+                            (label: "bid", value: "1200"),
+                        ]),
+                    ]
+                ))
             )
         }
     }
