@@ -58,7 +58,7 @@ This project uses two different testing approaches:
 - Unit Tests: Tests each logic component separately
 - Snapshot Tests: Tests view components by comparing them with a pre-recorded baseline
 
-TODO: Test Plans!
+TBD: Test Plans!
 
 <!-- Badge Links -->
 
