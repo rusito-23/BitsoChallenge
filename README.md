@@ -25,6 +25,11 @@ The local dev environment can be set up using the [Tools/setup](./Tools/setup) s
 
 Once we open Xcode, all packages will be resolved automatically.
 
+## Dependencies
+
+The only 3rd party dependency used in this project is [pointfreeco/swift-snapshot-testing](https://github.com/pointfreeco/swift-snapshot-testing).
+This dependency is used to perform snapshot comparison tests.
+
 ## Patterns
 
 Across this app, we will use:
@@ -48,7 +53,12 @@ Each of these modules are Local Swift Packages.
 
 ## Testing
 
-TBD
+This project uses two different testing approaches:
+
+- Unit Tests: Tests each logic component separately
+- Snapshot Tests: Tests view components by comparing them with a pre-recorded baseline
+
+TODO: Test Plans!
 
 <!-- Badge Links -->
 
