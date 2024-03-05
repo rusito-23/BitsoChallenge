@@ -6,16 +6,16 @@ final class LogTests: XCTestCase {
 
     // MARK: Properties
 
-    private var osLogger: MockOSLogger!
-    private var dateProvider: MockDateProvider!
+    private var osLogger: OSLoggerMock!
+    private var dateProvider: DateProviderMock!
     private var log: Log!
     private var formattedDate: String { dateProvider.now().formatted(.iso8601) }
 
     // MARK: Set Up
 
     override func setUp() {
-        osLogger = MockOSLogger()
-        dateProvider = MockDateProvider()
+        osLogger = OSLoggerMock()
+        dateProvider = DateProviderMock()
         log = Log(logger: osLogger, dateProvider: dateProvider)
     }
 

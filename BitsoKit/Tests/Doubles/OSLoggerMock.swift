@@ -1,7 +1,7 @@
 import os
 @testable import BitsoKit
 
-final class MockOSLogger: OSLoggerProtocol {
+final class OSLoggerMock: OSLoggerProtocol {
     private(set) var lastLog: (level: OSLogType, message: String)?
 
     func log(level: OSLogType, message: String) {

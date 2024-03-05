@@ -16,11 +16,6 @@ public protocol LocalizableContent {
 // MARK: - Defaults
 
 public extension LocalizableContent {
-    /// By default, we use the main bundle.
-    func localize() -> String {
-        localize(bundle: .main)
-    }
-
     /// By default, localization with arguments can be made with the existing localized value.
     func localize(bundle: Bundle, _ args: CVarArg...) -> String {
         String(format: localize(bundle: bundle), arguments: args)

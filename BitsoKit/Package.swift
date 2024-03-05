@@ -20,7 +20,8 @@ let package = Package(
         .testTarget(
             name: "BitsoKitTests",
             dependencies: ["BitsoKit"],
-            path: "Tests"
+            path: "Tests",
+            resources: [.process("Resources")]
         ),
     ]
 )

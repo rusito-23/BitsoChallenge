@@ -3,34 +3,30 @@ import XCTest
 
 final class BorderTests: XCTestCase {
     func test_width_shouldHaveExpectedValues() {
-        var expectedValues: [CGFloat] = [
-            2.0,
-            1.0,
-            0.5,
+        let values: [Border.Width] = [
+            .light,
+            .regular,
+            .bold,
         ]
 
-        for width in Border.Width.allCases {
-            guard let expectedValue = expectedValues.popLast() else {
-                return XCTFail("Unexpected case not covered: \(width)")
-            }
-
-            XCTAssertEqual(width.rawValue, expectedValue, "Width.\(width) failed.")
-        }
+        XCTAssertEqual(values.map(\.rawValue), [
+            0.5,
+            1.0,
+            2.0,
+        ])
     }
 
     func test_radius_shouldHaveExpectedValues() {
-        var expectedValues: [CGFloat] = [
-            50.0,
-            20.0,
-            10.0,
+        let values: [Border.Radius] = [
+            .small,
+            .medium,
+            .large,
         ]
 
-        for radius in Border.Radius.allCases {
-            guard let expectedValue = expectedValues.popLast() else {
-                return XCTFail("Unexpected case not covered: \(radius)")
-            }
-
-            XCTAssertEqual(radius.rawValue, expectedValue, "Radius.\(radius) failed.")
-        }
+        XCTAssertEqual(values.map(\.rawValue), [
+            10.0,
+            20.0,
+            50.0,
+        ])
     }
 }

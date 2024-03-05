@@ -16,14 +16,14 @@ final class HTTPTests: XCTestCase {
             .patch,
         ]
 
-        XCTAssertEqual(methods.map { $0.rawValue }, [
+        XCTAssertEqual(methods.map(\.rawValue), [
             "GET",
             "PUT",
             "POST",
             "PATCH",
         ])
 
-        XCTAssertEqual(methods.map { $0.supportsPayload }, [
+        XCTAssertEqual(methods.map(\.supportsPayload), [
             false,
             true,
             true,

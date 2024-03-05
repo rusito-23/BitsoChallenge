@@ -1,7 +1,7 @@
 import BitsoKit
 import Foundation
 
-struct MockDateProvider: DateProvider {
+struct DateProviderMock: DateProvider {
     let mockNow: Date
 
     init(mockNow: Date = Date(timeIntervalSince1970: 2300)) {

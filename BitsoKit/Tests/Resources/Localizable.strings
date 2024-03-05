@@ -1,0 +1,4 @@
+// Mock Localization Strings
+
+"MOCK_LOCALIZABLE_STRING" = "Mock Localized String";
+"MOCK_LOCALIZABLE_STRING_FORMAT" = "Mock Localized String With Format %@";
