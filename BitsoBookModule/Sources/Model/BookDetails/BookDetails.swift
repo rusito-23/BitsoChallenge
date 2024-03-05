@@ -4,7 +4,7 @@ import Foundation
 /// - Note: Ignores _rolling_average_change_ object.
 struct BookDetails: Decodable {
     /// The lowest sell order.
-    let ask: String?
+    let ask: String
 
     /// The highest buy order.
     let bid: String

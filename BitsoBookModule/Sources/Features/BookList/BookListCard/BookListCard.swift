@@ -36,6 +36,8 @@ struct BookListCard: View {
             Text(viewModel.name)
                 .font(.title3.bold())
 
+            Spacer()
+
             detailsStack
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -51,7 +53,6 @@ struct BookListCard: View {
 
     private func value(label: String, value: String) -> some View {
         HStack {
-            Spacer()
             Text(label).font(.callout.weight(.light))
             Text(value).font(.callout)
         }

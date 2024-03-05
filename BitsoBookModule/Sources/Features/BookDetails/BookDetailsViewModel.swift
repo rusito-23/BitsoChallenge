@@ -5,8 +5,13 @@ import Foundation
 
 enum BookDetailsViewState {
     case loading
-    case loaded(details: BookDetails)
+    case loaded(sections: [Section])
     case failed(error: BookServiceError)
+
+    enum Section: Hashable {
+        case history(volume: String, high: String, change: String)
+        case bid(ask: String, bid: String)
+    }
 }
 
 // MARK: - Protocol
@@ -56,7 +61,17 @@ final class LiveBookDetailsViewModel: BookDetailsViewModel {
             switch result {
             case let .success(details):
                 title = details.name
-                state = .loaded(details: details)
+                state = .loaded(sections: [
+                    .history(
+                        volume: details.volume,
+                        high: details.high,
+                        change: details.change
+                    ),
+                    .bid(
+                        ask: details.ask,
+                        bid: details.bid
+                    ),
+                ])
             case let .failure(error):
                 state = .failed(error: error)
             }

@@ -3,11 +3,11 @@
 
 - [x] Add BookDetails support
 - [] Fix book detail view
-- [] Support better service error codes
 - [] Format values in BookList
 - [] Add refresh timer to BookList
-- [] Add title to book list
+- [] Support better service error codes
 - [] Loading indicator for book list
+- [] Add title to book list
 - [] Prevent loading twice
 - [] Add unit tests
 - [] Rename book ID to name

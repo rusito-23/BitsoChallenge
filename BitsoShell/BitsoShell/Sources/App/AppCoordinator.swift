@@ -29,8 +29,7 @@ struct AppCoordinator: View {
 
     var body: some View {
         NavigationStack(path: $router.path) {
-            RootView()
-                .navigation(module: bookModule)
+            bookModule.navigation(to: .bookList)
         }
         .environmentObject(router)
     }
