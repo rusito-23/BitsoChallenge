@@ -32,6 +32,7 @@ Across this app, we will use:
 - **MVVM-C** (Model-View-ViewModel-Coordinator) architectural pattern
 - **Dependency Injection** through initializer
 - **Async/Await** patterns to perform background tasks
+- **Router** pattern to manage navigation between SwiftUI views
 
 ## Modules
 

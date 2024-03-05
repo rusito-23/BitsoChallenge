@@ -16,10 +16,4 @@ final class LiveBookModuleTests: XCTestCase {
         let coordinator = module.coordinator(for: destination)
         XCTAssert(coordinator is BookListCoordinator)
     }
-
-    func test_navigate_toInternalDestination() {
-        let destination: BookInternalDestination = .bookDetails(id: "book_id")
-        let coordinator = module.internalCoordinator(for: destination)
-        XCTAssert(coordinator is BookDetailsCoordinator)
-    }
 }

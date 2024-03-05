@@ -20,7 +20,7 @@ using **SwiftUI** and **Combine**.
 A small caveat is that the Coordinator components do not behave the same as in **UIKit** based apps.
 These conform to **View**, since that is required to be pushed to the navigation. However, these 
 were created to behave as the entry-point of the feature, determining the dependencies of the view
-and displaying it.
+and handling navigation.
 
 ## Book List
 

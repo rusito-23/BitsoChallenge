@@ -14,7 +14,9 @@ struct BookCardView: View {
 
     var body: some View {
         Button {
-            router.navigate(to: BookInternalDestination.bookDetails(id: viewModel.id))
+            router.navigate(
+                to: BookListCoordinator.Destination.bookDetails(id: viewModel.id)
+            )
         } label: {
             CardView {
                 content
