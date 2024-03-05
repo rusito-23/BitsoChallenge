@@ -26,6 +26,7 @@ struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
                 bookDetailsView(bookDetails)
             }
         }
+        .navigationTitle(viewModel.title ?? "")
         .onAppear {
             viewModel.load()
         }

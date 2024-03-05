@@ -26,32 +26,47 @@ struct BookListCard: View {
             CardContainer {
                 content
             }
-            .frame(maxWidth: .infinity)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
     }
 
     private var content: some View {
-        VStack(alignment: .center) {
+        HStack {
             Text(viewModel.name)
-                .font(.headline)
+                .font(.title3.bold())
 
-            Text(viewModel.maximumValue)
-                .font(.body)
-
-            valueStack
+            detailsStack
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private var valueStack: some View {
-        HStack {
-            Text(viewModel.maximumValue)
-                .font(.callout)
+    private var detailsStack: some View {
+        VStack(alignment: .trailing) {
+            Text(viewModel.maximumPrice).font(.headline.bold())
+            value(label: Content.minimum.localized, value: viewModel.minimumValue)
+            value(label: Content.maximum.localized, value: viewModel.maximumValue)
+        }
+    }
 
-            Text(viewModel.minimumValue)
-                .font(.callout)
+    private func value(label: String, value: String) -> some View {
+        HStack {
+            Spacer()
+            Text(label).font(.callout.weight(.light))
+            Text(value).font(.callout)
+        }
+    }
+}
+
+// MARK: - Content
+
+extension BookListCard {
+    enum Content: String, LocalizableContent {
+        case minimum = "MINIMUM"
+        case maximum = "MAXIMUM"
+
+        var localized: String {
+            localize(bundle: .module)
         }
     }
 }

@@ -1,8 +1,9 @@
 
 # Important
 
-- [] Add BookDetails support
-- [] Support better error names
+- [x] Add BookDetails support
+- [] Fix book detail view
+- [] Support better service error codes
 - [] Format values in BookList
 - [] Add refresh timer to BookList
 - [] Add title to book list

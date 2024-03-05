@@ -4,6 +4,7 @@ import BitsoUI
 import BitsoNet
 import SwiftUI
 
+// TBD: Docstrings
 struct AppCoordinator: View {
 
     // MARK: Observed Properties

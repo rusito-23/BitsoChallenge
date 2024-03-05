@@ -11,6 +11,7 @@
 		780B88582B9525B500E0CA83 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780B88572B9525B500E0CA83 /* Environment.swift */; };
 		781EC2142B8E37ED004A0757 /* BitsoShellApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781EC2132B8E37ED004A0757 /* BitsoShellApp.swift */; };
 		781EC2162B8E37ED004A0757 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781EC2152B8E37ED004A0757 /* AppCoordinator.swift */; };
+		782488232B969177005D3BC0 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782488222B969177005D3BC0 /* Configuration.swift */; };
 		7838B5282B93E4D100B1AB36 /* BitsoBookModule in Frameworks */ = {isa = PBXBuildFile; productRef = 7838B5272B93E4D100B1AB36 /* BitsoBookModule */; };
 		784B6A672B93C1D50048D8E1 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784B6A662B93C1D50048D8E1 /* RootView.swift */; };
 		784B6A6C2B93C4910048D8E1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 784B6A6B2B93C4910048D8E1 /* Localizable.strings */; };
@@ -23,6 +24,7 @@
 		781EC2102B8E37ED004A0757 /* BitsoShell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BitsoShell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		781EC2132B8E37ED004A0757 /* BitsoShellApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitsoShellApp.swift; sourceTree = "<group>"; };
 		781EC2152B8E37ED004A0757 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		782488222B969177005D3BC0 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		784B6A662B93C1D50048D8E1 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		784B6A6B2B93C4910048D8E1 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -51,12 +53,13 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		780B88562B95257400E0CA83 /* Domain */ = {
+		780B88562B95257400E0CA83 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
 				780B88572B9525B500E0CA83 /* Environment.swift */,
+				782488222B969177005D3BC0 /* Configuration.swift */,
 			);
-			path = Domain;
+			path = Configuration;
 			sourceTree = "<group>";
 		};
 		781EC2072B8E37ED004A0757 = {
@@ -88,7 +91,7 @@
 		784B6A682B93C4700048D8E1 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				780B88562B95257400E0CA83 /* Domain */,
+				780B88562B95257400E0CA83 /* Configuration */,
 				780B88552B95256800E0CA83 /* App */,
 				786DC51F2B93CBDF0079D433 /* Root */,
 			);
@@ -202,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				781EC2162B8E37ED004A0757 /* AppCoordinator.swift in Sources */,
+				782488232B969177005D3BC0 /* Configuration.swift in Sources */,
 				781EC2142B8E37ED004A0757 /* BitsoShellApp.swift in Sources */,
 				784B6A672B93C1D50048D8E1 /* RootView.swift in Sources */,
 				780B88582B9525B500E0CA83 /* Environment.swift in Sources */,

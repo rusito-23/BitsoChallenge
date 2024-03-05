@@ -80,27 +80,6 @@ extension LiveNetworkClient: NetworkClient {
             }
         }
     }
-
-    /// Parses the response model from the given request and return the unwrapped payload.
-    /// - Parameter data: The raw data given by the network call.
-    /// - Parameter request: The request that triggered the data.
-    /// - Returns: The result that determines whether the network call was successful, with its associated payload if needed.
-    private func parse<ResponsePayload: Decodable>(
-        _ data: Data,
-        from request: URLRequest
-    ) throws -> Result<ResponsePayload, NetworkError> {
-        let responseModel = try decoder.decode(ResponseModel<ResponsePayload>.self, from: data)
-
-        switch responseModel {
-        case let .success(payload):
-            log.info("Request: \(request) succeeded.")
-            return .success(payload)
-
-        case let .failure(message: message, code: code):
-            log.info("Request: \(request) failed with error: \(code), \(message)")
-            return .failure(.serviceError(code: code))
-        }
-    }
 }
 
 // MARK: - Private Utils
@@ -141,5 +120,26 @@ private extension LiveNetworkClient {
         }
 
         return request
+    }
+
+    /// Parses the response model from the given request and return the unwrapped payload.
+    /// - Parameter data: The raw data given by the network call.
+    /// - Parameter request: The request that triggered the data.
+    /// - Returns: The result that determines whether the network call was successful, with its associated payload if needed.
+    func parse<ResponsePayload: Decodable>(
+        _ data: Data,
+        from request: URLRequest
+    ) throws -> Result<ResponsePayload, NetworkError> {
+        let responseModel = try decoder.decode(ResponseModel<ResponsePayload>.self, from: data)
+
+        switch responseModel {
+        case let .success(payload):
+            log.info("Request: \(request) succeeded.")
+            return .success(payload)
+
+        case let .failure(message: message, code: code):
+            log.info("Request: \(request) failed with error: \(code), \(message)")
+            return .failure(.serviceError(code: code))
+        }
     }
 }

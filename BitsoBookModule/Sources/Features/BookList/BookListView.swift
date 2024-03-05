@@ -43,16 +43,16 @@ struct BookListView<ViewModel: BookListViewModel>: View {
     private var emptyView: some View {
         NoticeView(
             icon: .magnifyingGlass,
-            title: Content.noticeTitle.localize(bundle: .module),
-            subtitle: Content.emptyResultsMessage.localize(bundle: .module)
+            title: Content.noticeTitle.localized,
+            subtitle: Content.emptyResultsMessage.localized
         )
     }
 
     private func errorView(_ error: BookServiceError) -> some View {
         NoticeView(
             icon: .error,
-            title: Content.noticeTitle.localize(bundle: .module),
-            subtitle: Content.emptyResultsMessage.localize(bundle: .module)
+            title: Content.noticeTitle.localized,
+            subtitle: Content.emptyResultsMessage.localized
         )
     }
 
@@ -75,7 +75,11 @@ private extension BookListView {
     enum Content: String, LocalizableContent {
         case noticeTitle = "OOPS"
         case emptyResultsMessage = "BOOK_LIST_EMPTY_RESULT_MESSAGE"
-        case errorMessage = "BOOK_LIST_ERROR_MESSAGE"
+        case errorMessage = "GENERAL_ERROR_MESSAGE"
+
+        var localized: String {
+            localize(bundle: .module)
+        }
     }
 }
 

@@ -1,7 +1,5 @@
 import SwiftUI
 
-// MARK: - App
-
 @main
 struct BitsoShellApp: App {
 
@@ -21,15 +19,5 @@ struct BitsoShellApp: App {
         WindowGroup {
             AppCoordinator(configuration: configuration)
         }
-    }
-}
-
-// MARK: - App Configuration
-
-class Configuration {
-    let environment: Environment
-
-    init(environment: Environment) {
-        self.environment = environment
     }
 }
