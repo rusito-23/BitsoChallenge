@@ -13,8 +13,3 @@ public protocol APIEnvironment {
     /// An optional path to be appended to the base URL, if present. Defaults to `nil`.
     var path: String? { get }
 }
-
-extension APIEnvironment {
-    /// By default, the path will not be taken into account.
-    var path: String? { nil }
-}

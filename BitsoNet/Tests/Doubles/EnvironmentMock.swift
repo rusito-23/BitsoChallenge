@@ -2,7 +2,7 @@ import BitsoNet
 import Foundation
 
 /// A mock environment that can take any values.
-struct DomainMock: APIEnvironment {
+struct EnvironmentMock: APIEnvironment {
     let scheme: String
     let host: String
     let path: String?

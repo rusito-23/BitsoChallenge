@@ -1,39 +1,22 @@
-import BitsoNet
 import XCTest
+@testable import BitsoNet
 
 final class LiveNetworkClientTests: XCTestCase {
-
-    // MARK: Properties
-
     private var encoder: JSONEncoder!
     private var decoder: JSONDecoder!
-
-    private var requestPayload: PayloadMock!
-    private var requestPayloadData: Data!
-
-    private var responsePayload: PayloadMock!
-    private var responsePayloadData: Data!
-
     private var client: LiveNetworkClient!
-
-    // MARK: Constants
-
-    private let environment = DomainMock.valid
+    private var mockRequestPayload: PayloadMock!
+    private var mockResponseData: Data!
+    private let environment = EnvironmentMock.valid
     private let endpoint = EndpointMock(method: .post)
-
-    // MARK: Set up
 
     override func setUp() async throws {
         try await super.setUp()
 
         encoder = JSONEncoder()
         decoder = JSONDecoder()
-
-        requestPayload = PayloadMock()
-        requestPayloadData = try encoder.encode(requestPayload)
-
-        responsePayload = PayloadMock()
-        responsePayloadData = try encoder.encode(responsePayload)
+        mockRequestPayload = PayloadMock()
+        mockResponseData = try responseData(from: "ResponseSuccess")
 
         client = LiveNetworkClient(
             environment: environment,
@@ -48,23 +31,49 @@ final class LiveNetworkClientTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: Tests
-
     func test_perform_withValidPayload_shouldSucceed() async throws {
         // GIVEN
-        URLProtocolMock.add(.data(responsePayloadData), for: url(from: environment, endpoint))
+        URLProtocolMock.add(.data(mockResponseData), for: url(from: environment, endpoint))
 
         // WHEN
         let result = await perform(endpoint)
 
         // THEN
-        XCTAssertEqual(result, .success(responsePayload))
+        let expectedPayload = PayloadMock(
+            id: try XCTUnwrap(UUID(uuidString: "31e05614-58cf-4ed7-b82c-e4b233a6317b")),
+            value: 23
+        )
+        XCTAssertEqual(result, .success(expectedPayload))
     }
 
-    func test_perform_withInvalidURL_shouldFail() async {
+    func test_perform_withValidUnsuccessfulPayload_shouldFail() async throws {
+        // GIVEN
+        let data = try responseData(from: "ResponseFailure")
+        URLProtocolMock.add(.data(data), for: url(from: environment, endpoint))
+
+        // WHEN
+        let result = await perform(endpoint)
+
+        // THEN
+        XCTAssertEqual(result, .failure(.serviceError(code: 9000)))
+    }
+
+    func test_perform_withInvalidResponseData_shouldReturnFailure() async throws {
+        // GIVEN
+        let data = try responseData(from: "ResponseInvalid")
+        URLProtocolMock.add(.data(data), for: url(from: environment, endpoint))
+
+        // WHEN
+        let result = await perform(endpoint)
+
+        // THEN
+        XCTAssertEqual(result, .failure(.invalidResponse))
+    }
+
+    func test_perform_withInvalidURL_shouldReturnFailure() async {
         // GIVEN
         client = LiveNetworkClient(
-            environment: DomainMock.invalid,
+            environment: EnvironmentMock.invalid,
             urlSession: .mocked,
             encoder: encoder,
             decoder: decoder
@@ -158,7 +167,7 @@ final class LiveNetworkClientTests: XCTestCase {
         // GIVEN
         let headerMocks = [HeaderMock.generic]
         let endpoint = EndpointMock(additionalHeaders: headerMocks)
-        URLProtocolMock.add(.data(responsePayloadData), for: url(from: environment, endpoint))
+        URLProtocolMock.add(.data(mockResponseData), for: url(from: environment, endpoint))
 
         // WHEN
         await perform(endpoint)
@@ -175,7 +184,7 @@ final class LiveNetworkClientTests: XCTestCase {
         // GIVEN
         let headerMocks = [HeaderMock.contentTypeXML, HeaderMock.generic]
         let endpoint = EndpointMock(additionalHeaders: headerMocks)
-        URLProtocolMock.add(.data(responsePayloadData), for: url(from: environment, endpoint))
+        URLProtocolMock.add(.data(mockResponseData), for: url(from: environment, endpoint))
 
         // WHEN
         await perform(endpoint)
@@ -190,8 +199,8 @@ final class LiveNetworkClientTests: XCTestCase {
 
     func test_perform_withRequestPayload_shouldBeEncoded() async throws {
         // GIVEN
-        let endpoint = EndpointMock(method: .post, requestPayload: requestPayload)
-        URLProtocolMock.add(.data(responsePayloadData), for: url(from: environment, endpoint))
+        let endpoint = EndpointMock(method: .post, requestPayload: mockRequestPayload)
+        URLProtocolMock.add(.data(mockResponseData), for: url(from: environment, endpoint))
 
         // WHEN
         await perform(endpoint)
@@ -199,13 +208,13 @@ final class LiveNetworkClientTests: XCTestCase {
         // THEN
         let request = try XCTUnwrap(URLProtocolMock.lastProcessedRequest)
         let data = try XCTUnwrap(request.bodyStreamData)
-        XCTAssertEqual(requestPayload, try decoder.decode(PayloadMock.self, from: data))
+        XCTAssertEqual(mockRequestPayload, try decoder.decode(PayloadMock.self, from: data))
     }
 
     func test_perform_withRequestPayload_whenMethodDoesNotSupportPayload() async throws {
         // GIVEN
-        let endpoint = EndpointMock(method: .get, requestPayload: requestPayload)
-        URLProtocolMock.add(.data(responsePayloadData), for: url(from: environment, endpoint))
+        let endpoint = EndpointMock(method: .get, requestPayload: mockRequestPayload)
+        URLProtocolMock.add(.data(mockResponseData), for: url(from: environment, endpoint))
 
         // WHEN
         await perform(endpoint)
@@ -218,7 +227,7 @@ final class LiveNetworkClientTests: XCTestCase {
     func test_perform_withoutRequestPayload() async throws {
         // GIVEN
         let endpoint = EndpointMock(method: .get)
-        URLProtocolMock.add(.data(responsePayloadData), for: url(from: environment, endpoint))
+        URLProtocolMock.add(.data(mockResponseData), for: url(from: environment, endpoint))
 
         // WHEN
         await perform(endpoint)
@@ -233,7 +242,7 @@ final class LiveNetworkClientTests: XCTestCase {
         encoder.nonConformingFloatEncodingStrategy = .throw
         let invalidPayload = PayloadMock(value: .infinity)
         let endpoint = EndpointMock(method: .post, requestPayload: invalidPayload)
-        URLProtocolMock.add(.data(responsePayloadData), for: url(from: environment, endpoint))
+        URLProtocolMock.add(.data(mockResponseData), for: url(from: environment, endpoint))
 
         // WHEN
         let result = await perform(endpoint)
@@ -246,6 +255,12 @@ final class LiveNetworkClientTests: XCTestCase {
 // MARK: - Test Utils
 
 private extension LiveNetworkClientTests {
+    /// Load the response data from a JSON file.
+    func responseData(from file: String) throws -> Data {
+        let url = try XCTUnwrap(Bundle.module.url(forResource: file, withExtension: "json"))
+        return try Data(contentsOf: url)
+    }
+
     /// A util to perform the service call without having to save the result
     /// or specifying the expected type of the response payload.
     @discardableResult
