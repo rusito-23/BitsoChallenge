@@ -54,18 +54,28 @@ final class BookDetailsViewModel: BaseBookViewModel, BookDetailsViewModeling {
                     title: displayName(from: details.name),
                     sections: [
                         .init(items: [
-                            (label: Content.volume.localized,
-                             value: currencyFormat(value: details.volume)),
-                            (label: Content.high.localized,
-                             value: currencyFormat(value: details.high)),
-                            (label: Content.bid.localized,
-                             value: currencyFormat(value: details.bid)),
+                            (
+                                label: Content.volume.localized,
+                                value: currencyFormat(value: details.volume)
+                            ),
+                            (
+                                label: Content.high.localized,
+                                value: currencyFormat(value: details.high)
+                            ),
+                            (
+                                label: Content.change.localized,
+                                value: currencyFormat(value: details.change)
+                            ),
                         ]),
                         .init(items: [
-                            (label: Content.ask.localized,
-                             value: currencyFormat(value: details.ask)),
-                            (label: Content.bid.localized,
-                             value: currencyFormat(value: details.bid)),
+                            (
+                                label: Content.ask.localized,
+                                value: currencyFormat(value: details.ask)
+                            ),
+                            (
+                                label: Content.bid.localized,
+                                value: currencyFormat(value: details.bid)
+                            ),
                         ]),
                     ]
                 )

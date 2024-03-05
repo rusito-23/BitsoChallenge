@@ -9,11 +9,14 @@ class BaseBookViewModel {
     }
 
     /// Format as a currency a book-related value to be displayed.
-    func currencyFormat(value: String) -> String {
-        guard let double = Double(value) else { return value }
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.maximumFractionDigits = 2
-        return formatter.string(from: NSNumber(value: double)) ?? value
+    /// - Note: I'm not sure if we want to lose the decimal digits, so I'm using a custom format instead of `NumberFormatter`.
+    /// - Note: Uses the current device locale instead of the `Book` locale (based on Minor).
+    func currencyFormat(value: String, locale: Locale = .current) -> String {
+        let negativeSign = "-"
+        let currencySymbol = locale.currencySymbol ?? ""
+        let rawValue = value.split(separator: negativeSign).first ?? ""
+        return value.starts(with: negativeSign) ?
+            "\(negativeSign)\(currencySymbol)\(rawValue)" :
+            "\(currencySymbol)\(rawValue)"
     }
 }

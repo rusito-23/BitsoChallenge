@@ -33,7 +33,8 @@ let package = Package(
             dependencies: [
                 "BitsoBookModule",
             ],
-            path: "Tests"
+            path: "Tests",
+            resources: [.process("Resources")]
         ),
     ]
 )
