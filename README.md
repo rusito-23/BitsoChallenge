@@ -41,7 +41,7 @@ The workspace contains different modules:
 - [BitsoKit](./BitsoKit): general utils to be used across all modules
 - [BitsoBookModule](./BitsoBookModule): the module that provides features related to books
 
-Each of these modules are Local Swift Packages.
+Each of these modules are Local Swift Packages. Each module also contains a separate README that contains further explanation on its purpose.
 
 ## Patterns
 

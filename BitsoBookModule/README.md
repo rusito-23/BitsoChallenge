@@ -24,7 +24,7 @@ and handling navigation.
 
 ## Book List
 
-![BookList](./Demo/BookList.png | width=100)
+<img src="./Demo/BookList.png" width=200 />
 
 This screen provides the complete list of all available books, each book contains:
 
@@ -34,7 +34,7 @@ This screen provides the complete list of all available books, each book contain
 
 ## Book Details
 
-![BookDetails](./Demo/BookDetails.png | width=100)
+<img src="./Demo/BookDetails.png" width=200 />
 
 This screen provides details on a particular selected book. Displays:
 
