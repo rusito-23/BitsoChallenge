@@ -13,7 +13,7 @@ enum BookListState {
 // MARK: - Protocol
 
 @MainActor
-protocol BookListViewModel: ObservableObject {
+protocol BookListViewModeling: ObservableObject {
     /// The current state of the view.
     var state: BookListState { get }
 
@@ -23,10 +23,10 @@ protocol BookListViewModel: ObservableObject {
     func loadBooks() -> Task<Void, Never>
 }
 
-// MARK: - Live
+// MARK: - View Model
 
 @MainActor
-final class LiveBookListViewModel: BookListViewModel {
+final class BookListViewModel: BookListViewModeling {
     @Published var state: BookListState = .loading
     private let service: any BookService
 
@@ -66,7 +66,7 @@ final class LiveBookListViewModel: BookListViewModel {
 
 // MARK: - Localizable Content
 
-private extension LiveBookListViewModel {
+private extension BookListViewModel {
     enum Content: String, LocalizableContent {
         case noticeTitle = "OOPS"
         case emptyResultsMessage = "EMPTY_RESULT_MESSAGE"

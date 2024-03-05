@@ -1,7 +1,7 @@
 import BitsoUI
 import SwiftUI
 
-struct BookDetailsView<ViewModel: BookDetailsViewModel>: View {
+struct BookDetailsView<ViewModel: BookDetailsViewModeling>: View {
     @StateObject private var viewModel: ViewModel
 
     init(viewModel: ViewModel) {
@@ -64,7 +64,7 @@ private extension BookDetailsView {
 
 #if DEBUG
 struct BookDetailsView_Previews: PreviewProvider {
-    final class ViewModelMock: BookDetailsViewModel {
+    final class ViewModelMock: BookDetailsViewModeling {
         var title: String? = "BTC MXN"
         var state: BookDetailsViewState = .loading
 

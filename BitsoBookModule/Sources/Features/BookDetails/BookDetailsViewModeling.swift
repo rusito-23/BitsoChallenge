@@ -18,7 +18,7 @@ enum BookDetailsViewState {
 // MARK: - Protocol
 
 @MainActor
-protocol BookDetailsViewModel: ObservableObject {
+protocol BookDetailsViewModeling: ObservableObject {
     /// The title of the view. Updates to display the name of the book once loaded.
     var title: String? { get }
 
@@ -34,7 +34,7 @@ protocol BookDetailsViewModel: ObservableObject {
 // MARK: - Live
 
 @MainActor
-final class LiveBookDetailsViewModel: BookDetailsViewModel {
+final class BookDetailsViewModel: BookDetailsViewModeling {
     @Published private(set) var title: String?
     @Published private(set) var state: BookDetailsViewState = .loading
 
@@ -80,7 +80,7 @@ final class LiveBookDetailsViewModel: BookDetailsViewModel {
 
 // MARK: - Localizable Content
 
-private extension LiveBookDetailsViewModel {
+private extension BookDetailsViewModel {
     enum Content: String, LocalizableContent {
         case noticeTitle = "OOPS"
         case generalErrorMessage = "GENERAL_ERROR_MESSAGE"

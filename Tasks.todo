@@ -2,11 +2,13 @@
 # Important
 
 - [x] Add BookDetails support
-- [] Fix book detail view
-- [] Format values in BookList
+- [x] Fix book detail view
+- [x] Support better service error codes
+- [x] Loading indicator for book list
+- [x] Find a better approach for Environment
+
+- [] Format values
 - [] Add refresh timer to BookList
-- [] Support better service error codes
-- [] Loading indicator for book list
 - [] Add title to book list
 - [] Prevent loading twice
 - [] Add unit tests
@@ -15,5 +17,4 @@
 # Follow-ups
 
 - [] Add snapshot tests
-- [] Find a better approach for Environment
 - [] Look into better view model DI

@@ -2,7 +2,7 @@ import BitsoUI
 import BitsoKit
 import SwiftUI
 
-struct BookListView<ViewModel: BookListViewModel>: View {
+struct BookListView<ViewModel: BookListViewModeling>: View {
     @StateObject private var viewModel: ViewModel
 
     init(viewModel: ViewModel) {
@@ -49,7 +49,7 @@ extension BookListView {
 #if DEBUG
 @available(*, unavailable)
 struct BookListView_Previews: PreviewProvider {
-    final class ViewModelMock: BookListViewModel {
+    final class ViewModelMock: BookListViewModeling {
         var state: BookListState
         init(state: BookListState) { self.state = state }
         func loadBooks() -> Task<Void, Never> { Task {} }
