@@ -37,26 +37,18 @@ final class BookListViewModel: BaseBookViewModel, BookListViewModeling {
     @Published private(set) var state: BookListState = .loading
 
     private let service: any BookService
-    private var timer: Timer?
+    private let timerManager: any TimerManaging
 
-    init(service: BookService) {
+    init(service: BookService, timerManager: any TimerManaging = TimerManager<Timer>()) {
         self.service = service
-    }
-
-    deinit {
-        timer?.invalidate()
+        self.timerManager = timerManager
     }
 
     func startPeriodicReload() {
         // Start a 30 second timer that will repeatedly reload the books and update the state.
-        timer = .scheduledTimer(withTimeInterval: 30, repeats: true) { _ in
-            // The operation needs to run in the main thread to ensure
-            // the view model properties are available to be updated.
-            Task { @MainActor [weak self] in
-                log.info("Reload timer triggered")
-                guard let self, case .loaded = self.state else { return }
-                self.loadBooks()
-            }
+        timerManager.schedule(interval: 30, repeats: true) {
+            log.info("Reload timer triggered")
+            return self.loadBooks()
         }
     }
 

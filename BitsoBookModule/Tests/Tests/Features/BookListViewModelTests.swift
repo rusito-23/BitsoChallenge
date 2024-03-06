@@ -4,10 +4,10 @@ import XCTest
 @testable import BitsoBookModule
 
 @MainActor
-// FIXME: We're missing tests for startPeriodicTimer because we're not injecting a timer interface.
 final class BookListViewModelTests: XCTestCase {
     private var mockModel: [Book]!
     private var mockService: BookServiceMock!
+    private var mockTimerManager: TimerManagerMock!
     private var viewModel: BookListViewModel!
     private var cancellables: Set<AnyCancellable>!
 
@@ -15,8 +15,57 @@ final class BookListViewModelTests: XCTestCase {
         try await super.setUp()
         mockModel = try load(from: "Books")
         mockService = BookServiceMock()
-        viewModel = BookListViewModel(service: mockService)
+        mockTimerManager = TimerManagerMock()
+        viewModel = BookListViewModel(service: mockService, timerManager: mockTimerManager)
         cancellables = Set<AnyCancellable>()
+    }
+
+    func test_periodicReload_shouldStartTimer() async throws {
+        // GIVEN
+        mockService.bookListResult = .success(mockModel)
+
+        // WHEN
+        viewModel.startPeriodicReload()
+
+        // THEN
+        XCTAssertEqual(mockTimerManager.interval, 30)
+        XCTAssertEqual(mockTimerManager.repeats, true)
+        XCTAssertNotNil(mockTimerManager.task)
+    }
+
+    func test_periodicReload_shouldReloadBooks() async throws {
+        // GIVEN
+        mockService.bookListResult = .success(mockModel)
+
+        // THEN
+        viewModel.$state
+            .dropFirst()
+            .assert(on: self, next: [
+                .loading,
+                .loaded(books: [
+                    .init(
+                        id: "btc_mxn",
+                        name: "BTC MXN",
+                        maximumValue: "$50000000",
+                        minimumValue: "$5",
+                        maximumPrice: "$16000000"
+                    ),
+                    .init(
+                        id: "eth_btc",
+                        name: "ETH BTC",
+                        maximumValue: "$2000.00000000",
+                        minimumValue: "$0.00000100",
+                        maximumPrice: "$5000.00000000"
+                    ),
+                ]),
+            ])
+            .store(in: &cancellables)
+
+        // WHEN
+        viewModel.startPeriodicReload()
+        await mockTimerManager.trigger()?.value
+
+        waitForExpectations()
     }
 
     func test_loadBooks_withServiceSuccess_shouldUpdateState() async throws {

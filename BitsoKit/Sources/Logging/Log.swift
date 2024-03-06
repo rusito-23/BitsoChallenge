@@ -10,16 +10,9 @@ public let log = Log()
 /// - prevent verbose logging for non-DEBUG builds.
 public struct Log {
     private let logger: OSLoggerProtocol
-    private let dateProvider: DateProvider
 
-    public init() {
-        self.logger = Logger()
-        self.dateProvider = LiveDateProvider()
-    }
-
-    init(logger: OSLoggerProtocol, dateProvider: DateProvider) {
+    init(logger: OSLoggerProtocol = Logger()) {
         self.logger = logger
-        self.dateProvider = dateProvider
     }
 }
 
@@ -122,7 +115,7 @@ private extension Log {
         function: String
     ) {
         let message = """
-        \(dateProvider.now().formatted(.iso8601)) \(level.rawValue) \
+        \(level.rawValue) \
         [\(filename(file)):\(line):\(function)] -> \(object)
         """
         logger.log(level: level.osLevel, message: message)
